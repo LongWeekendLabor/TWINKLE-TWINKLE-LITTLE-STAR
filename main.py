@@ -1,4 +1,6 @@
+from lib2to3.pytree import convert
 import pygame
+import os
 
 # define const
 FPS = 60
@@ -6,18 +8,26 @@ WIDTH = 960
 HEIGHT = 540
 GAMENAME = 'UNTITLED'
 
+# define color area
+BLACK = (0, 0, 0)
+
 # init & create a window
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption(GAMENAME)
 clock = pygame.time.Clock()
 
+# loading imgs
+# example...
+background_img = pygame.image.load(os.path.join('img', 'sample_bg.png')).convert()
+sample_img = pygame.image.load(os.path.join('img', 'sample.png')).convert()
+
 # sprite
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 40))
-        self.image.fill((255, 255, 255))
+        self.image = pygame.transform.scale(sample_img, (38, 38))
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.speed = [8, 8]
         
@@ -66,6 +76,6 @@ while running:
     
     
     # display screen
-    screen.fill((183, 224, 243))
+    screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
     pygame.display.update()
