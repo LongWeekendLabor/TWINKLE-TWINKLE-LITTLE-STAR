@@ -6,6 +6,7 @@ import os
 # import sources
 from src.const import *
 from src.player import *
+from src.star_class import *
 
 # init & create a window
 pygame.init()
