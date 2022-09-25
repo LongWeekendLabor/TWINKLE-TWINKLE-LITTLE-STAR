@@ -7,6 +7,7 @@ import os
 from src.const import *
 from src.player import *
 from src.SpaceJunck import *
+from src.star_class import *
 
 # init & create a window
 pygame.init()
