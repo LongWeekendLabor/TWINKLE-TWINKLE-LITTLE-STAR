@@ -1,5 +1,6 @@
 from black_hole import black_hole
 import pygame
+import random
 import os
 
 # define const
@@ -54,10 +55,12 @@ class Player(pygame.sprite.Sprite):
         if self.rect.top < 0: self.rect.top = 0
         if self.rect.bottom > HEIGHT: self.rect.bottom = HEIGHT
         
+
 # sprite group
 all_sprites = pygame.sprite.Group()
 player = Player()
 all_sprites.add(player)
+
     
 # gaming loop
 running = True
@@ -79,3 +82,5 @@ while running:
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
     pygame.display.update()
+
+pygame.quit()
