@@ -6,3 +6,4 @@ GAMENAME = 'UNTITLED'
 
 # define color area
 BLACK = (0, 0, 0)
+AZURE = (240,255,255)
