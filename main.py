@@ -1,5 +1,6 @@
-# import modules
+from black_hole import black_hole
 import pygame
+import random
 import os
 
 # import sources
@@ -17,10 +18,12 @@ clock = pygame.time.Clock()
 background_img = pygame.image.load(os.path.join('img', 'sample_bg.png')).convert()
 spaceship = pygame.image.load(os.path.join('img', 'sample.png')).convert()
         
+
 # sprite group
 all_sprites = pygame.sprite.Group()
 player = Player(spaceship)
 all_sprites.add(player)
+
     
 # gaming loop
 running = True
@@ -42,3 +45,5 @@ while running:
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
     pygame.display.update()
+
+pygame.quit()
