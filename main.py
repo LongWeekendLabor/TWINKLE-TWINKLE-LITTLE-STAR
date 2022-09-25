@@ -1,4 +1,3 @@
-from black_hole import black_hole
 import pygame
 import random
 import os
@@ -7,6 +6,7 @@ import os
 from src.const import *
 from src.player import *
 from src.star_class import *
+from  src.black_hole import *
 
 # init & create a window
 pygame.init()
