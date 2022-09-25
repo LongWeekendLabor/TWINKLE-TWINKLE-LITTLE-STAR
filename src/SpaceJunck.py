@@ -1,9 +1,7 @@
+from src.const import *
 import pygame
 import random
 
-AZURE = (240, 255, 255)
-WIDTH = 960
-HEIGHT = 540
 
 class SpaceJunk(pygame.sprite.Sprite):
     def __init__(self):
@@ -24,9 +22,3 @@ class SpaceJunk(pygame.sprite.Sprite):
             self.speedx = random.randrange(-1,1)
             self.rect.x = random.randrange(0,WIDTH - self.rect.width)
             self.rect.y = random.randrange(-100,-40)
-
-all_sprites = pygame.sprite.Group()
-rockNumber = 3
-for i in range(rockNumber):
-    trash = SpaceJunk()
-    all_sprites.add(trash)
