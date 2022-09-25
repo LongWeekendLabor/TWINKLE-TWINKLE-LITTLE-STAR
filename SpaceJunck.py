@@ -1,7 +1,7 @@
 import pygame
 import random
 
-BLACK = (0, 0, 0)
+AZURE = (240, 255, 255)
 WIDTH = 960
 HEIGHT = 540
 
@@ -9,7 +9,7 @@ class SpaceJunk(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((30, 40))
-        self.image.fill(BLACK)
+        self.image.fill(AZURE)
         self.rect = self.image.get_rect()
         self.speedy = random.randrange(1,5)
         self.speedx = random.randrange(-1,1)
