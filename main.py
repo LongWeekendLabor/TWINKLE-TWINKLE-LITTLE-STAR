@@ -6,6 +6,7 @@ import os
 # import sources
 from src.const import *
 from src.player import *
+from src.SpaceJunck import *
 
 # init & create a window
 pygame.init()
@@ -23,7 +24,10 @@ spaceship = pygame.image.load(os.path.join('img', 'sample.png')).convert()
 all_sprites = pygame.sprite.Group()
 player = Player(spaceship)
 all_sprites.add(player)
-
+rockNumber = 3
+for i in range(rockNumber):
+    trash = SpaceJunk()
+    all_sprites.add(trash)
     
 # gaming loop
 running = True
