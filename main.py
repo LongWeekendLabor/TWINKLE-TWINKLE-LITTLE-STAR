@@ -1,4 +1,3 @@
-from lib2to3.pytree import convert
 import pygame
 import random
 import os
