@@ -1,3 +1,4 @@
+from black_hole import black_hole
 import pygame
 import random
 import os
