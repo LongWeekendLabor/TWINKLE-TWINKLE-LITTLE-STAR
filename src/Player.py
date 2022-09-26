@@ -10,6 +10,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(img, (75, 75))
+        self.ori_img = self.image
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
         self.speed = [8, 8]
@@ -32,16 +33,27 @@ class Player(pygame.sprite.Sprite):
             self.location = location_change((0, 1), self.location)
         else:
             self.rect.right = GAME_BASE_SETUP["WIDTH"]
+            
+    def rotate(self, degree):
+        self.image = pygame.transform.rotate(self.ori_img, degree)
         
     def update(self):
         # get a class that store a list of bool that determine if any key was be clicked
         key_pressed = pygame.key.get_pressed()
         
         # control player to move
-        if key_pressed[pygame.K_RIGHT]: self.rect.x += self.speed[0]
-        if key_pressed[pygame.K_LEFT]: self.rect.x -= self.speed[0]
-        if key_pressed[pygame.K_UP]: self.rect.y -= self.speed[1]
-        if key_pressed[pygame.K_DOWN]: self.rect.y += self.speed[1]
+        if key_pressed[pygame.K_RIGHT]: 
+            self.rect.x += self.speed[0]
+            self.rotate(270)
+        if key_pressed[pygame.K_LEFT]: 
+            self.rect.x -= self.speed[0]
+            self.rotate(90)
+        if key_pressed[pygame.K_UP]: 
+            self.rect.y -= self.speed[1]
+            self.rotate(0)
+        if key_pressed[pygame.K_DOWN]: 
+            self.rect.y += self.speed[1]
+            self.rotate(180)
             
         # setting border effect
         if self.rect.right > GAME_BASE_SETUP["WIDTH"]: 
