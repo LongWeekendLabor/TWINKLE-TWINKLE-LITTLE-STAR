@@ -1,9 +1,18 @@
+# import model
+import pygame
+import os
+
 # define const
-FPS = 60
-WIDTH = 960
-HEIGHT = 540
-GAMENAME = 'UNTITLED'
+game_base_setup = {
+    "FPS" : 60, 
+    "WIDTH" : 1024,
+    "HEIGHT" : 512,
+    "GAMENAME" : 'UNTITLED', 
+    "MAP_SIZE" : (2, 2)
+}
 
 # define color area
-BLACK = (0, 0, 0)
-AZURE = (240,255,255)
+COLOR = {
+    "BLACK" : (0, 0, 0),
+    "AZURE" : (240,255,255)
+}
