@@ -1,5 +1,6 @@
 # import model
-from .const import *
+from .Const import *
+
 # location (str) change to index
 def location_index(location: str):
     return (ord(location[0]) - 65, (int(location[1]) - 1))
