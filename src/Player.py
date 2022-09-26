@@ -33,9 +33,13 @@ class Player(pygame.sprite.Sprite):
             self.location = location_change((0, 1), self.location)
         else:
             self.rect.right = GAME_BASE_SETUP["WIDTH"]
-            
+     
+    # let img rotate "degree" degree
     def rotate(self, degree):
         self.image = pygame.transform.rotate(self.ori_img, degree)
+        center = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = center
         
     def update(self):
         # get a class that store a list of bool that determine if any key was be clicked
