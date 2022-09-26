@@ -2,7 +2,7 @@ from .Const import *
 import pygame
 import random
 
-class SpaceJunk(pygame.sprite.Sprite):
+class Rock(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((30, 40))

@@ -5,7 +5,7 @@ import os
 # import sources
 from src.Const import *
 from src.Player import *
-from src.SpaceJunck import *
+from src.Rock import *
 from src.Star import *
 from src.BlackHole import *
 
@@ -26,7 +26,7 @@ player = Player(spaceship)
 
 # define functions
 def createRock():
-    rock = SpaceJunk()
+    rock = Rock()
     all_sprites.add(rock)
     rocks.add(rock)
     
