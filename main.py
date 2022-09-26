@@ -11,8 +11,8 @@ from  src.black_hole import *
 
 # init & create a window
 pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption(GAMENAME)
+screen = pygame.display.set_mode((game_base_setup["WIDTH"], game_base_setup["HEIGHT"]))
+pygame.display.set_caption(game_base_setup["GAMENAME"])
 clock = pygame.time.Clock()
 
 # loading imgs
@@ -35,7 +35,7 @@ running = True
 while running:
     
     # execute at most <FPS> times in 1 sec
-    clock.tick(FPS)
+    clock.tick(game_base_setup["FPS"])
     
     # get input
     for event in pygame.event.get():

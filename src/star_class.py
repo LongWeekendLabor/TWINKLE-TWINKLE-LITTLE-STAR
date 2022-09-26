@@ -1,6 +1,5 @@
 import pygame
-
-BLACK = (0,0,0)
+from .const import * 
 
 class star(pygame.sprite.Sprite):
     def __init__(self, name: str, temperture: float, color: str, location: list, size: tuple):
@@ -10,7 +9,7 @@ class star(pygame.sprite.Sprite):
         self.color = color
         self.location = location
         self.image = pygame.Surface(size)
-        self.image.set_colorkey(BLACK)
+        self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
 
     def update(self):

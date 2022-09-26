@@ -1,9 +1,13 @@
 # define const
-FPS = 60
-WIDTH = 960
-HEIGHT = 540
-GAMENAME = 'UNTITLED'
+game_base_setup = {
+    "FPS" : 60, 
+    "WIDTH" : 960,
+    "HEIGHT" : 540,
+    "GAMENAME" : 'UNTITLED', 
+}
 
 # define color area
-BLACK = (0, 0, 0)
-AZURE = (240,255,255)
+COLOR = {
+    "BLACK" : (0, 0, 0),
+    "AZURE" : (240,255,255)
+}
