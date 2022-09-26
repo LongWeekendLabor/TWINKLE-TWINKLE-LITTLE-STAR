@@ -9,13 +9,14 @@ from .location_func import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(img, (38, 38))
+        self.image = pygame.transform.scale(img, (75, 75))
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
         self.speed = [8, 8]
 
         # player information variable
         self.location = "A1"
+        self.health = 100    #TODO
 
         # absolute position
         # self.rect.x = 200

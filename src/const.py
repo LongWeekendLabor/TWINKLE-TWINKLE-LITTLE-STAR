@@ -1,4 +1,4 @@
-# import model
+# import models
 import pygame
 import os
 
@@ -9,6 +9,10 @@ game_base_setup = {
     "HEIGHT" : 512,
     "GAMENAME" : 'UNTITLED', 
     "MAP_SIZE" : (2, 2)
+}
+
+game_setup = {
+    "NumOfRocks" : 5
 }
 
 # define color area
