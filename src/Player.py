@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.ori_img = self.image
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
-        self.speed = [8, 8]
+        self.speed = [3, 3]
         self.last = 0
         
         # player information variable
@@ -92,12 +92,3 @@ class Player(pygame.sprite.Sprite):
                 self.location = location_change((1, 0), self.location)
             else:
                 self.rect.bottom = GAME_BASE_SETUP["HEIGHT"]
-        
-        now = []
-        now.append(UP)
-        now.append(DOWN)
-        now.append(LEFT)
-        now.append(RIGHT)
-        if now != self.last:
-            print(now)
-        self.last = now
