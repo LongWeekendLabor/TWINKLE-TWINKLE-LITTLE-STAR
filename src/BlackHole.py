@@ -1,5 +1,5 @@
 import pygame
-from .const import *
+from .Const import *
 
 black_hole_setup = {
     "image_size" : (50, 50),

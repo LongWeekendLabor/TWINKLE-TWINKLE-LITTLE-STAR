@@ -3,10 +3,10 @@ import random
 import os
 
 # import sources
-from src.const import *
-from src.player import *
-from src.SpaceJunck import *
-from src.star_class import *
+from src.Const import *
+from src.Player import *
+from src.Rock import *
+from src.Star import *
 from src.BlackHole import *
 
 # init & create a window
@@ -26,7 +26,7 @@ player = Player(spaceship)
 
 # define functions
 def createRock():
-    rock = SpaceJunk()
+    rock = Rock()
     all_sprites.add(rock)
     rocks.add(rock)
     
