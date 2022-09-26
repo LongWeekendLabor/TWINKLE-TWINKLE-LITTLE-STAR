@@ -11,8 +11,8 @@ from  src.black_hole import *
 
 # init & create a window
 pygame.init()
-screen = pygame.display.set_mode((game_base_setup["WIDTH"], game_base_setup["HEIGHT"]))
-pygame.display.set_caption(game_base_setup["GAMENAME"])
+screen = pygame.display.set_mode((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
+pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
 clock = pygame.time.Clock()
 
 # loading imgs
@@ -33,22 +33,22 @@ def createRock():
 def draw_health(surf, hp, x, y):
     if hp < 0:
         hp = 0
-    fill = (hp / 100) * game_setup["HP_BAR_LENGTH"]
-    outline_rect = pygame.Rect(x, y, game_setup["HP_BAR_LENGTH"], game_setup["HP_BAR_HEIGHT"])
-    fill_rect = pygame.Rect(x, y, fill, game_setup["HP_BAR_HEIGHT"])
+    fill = (hp / 100) * GAME_SETUP["HP_BAR_LENGTH"]
+    outline_rect = pygame.Rect(x, y, GAME_SETUP["HP_BAR_LENGTH"], GAME_SETUP["HP_BAR_HEIGHT"])
+    fill_rect = pygame.Rect(x, y, fill, GAME_SETUP["HP_BAR_HEIGHT"])
     pygame.draw.rect(surf, COLOR["RED"], fill_rect)
     pygame.draw.rect(surf, COLOR["WHITE"], outline_rect, 2)
 
 # add sprites into groups
 all_sprites.add(player)
-for i in range(game_setup["NumOfRocks"]): createRock()
+for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
     
 # gaming loop
 running = True
 while running:
     
     # execute at most <FPS> times in 1 sec
-    clock.tick(game_base_setup["FPS"])
+    clock.tick(GAME_BASE_SETUP["FPS"])
     
     # get input
     for event in pygame.event.get():

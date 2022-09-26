@@ -3,16 +3,16 @@ import pygame
 import os
 
 # define const
-game_base_setup = {
+GAME_BASE_SETUP = {
     "FPS" : 60, 
     "WIDTH" : 1024,
     "HEIGHT" : 512,
-    "GAMENAME" : 'UNTITLED', 
-    "MAP_SIZE" : (2, 2)
+    "GAMENAME" : 'UNTITLED'
 }
 
-game_setup = {
-    "NumOfRocks" : 5,
+GAME_SETUP = {
+    "MAP_SIZE" : (2, 2),
+    "NUM_OF_ROCKS" : 5,
     "HP_BAR_LENGTH" : 150,
     "HP_BAR_HEIGHT" : 15
 }

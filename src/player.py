@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.health = 100    #TODO
         
         # center position
-        self.rect.center = (game_base_setup["WIDTH"] / 2, game_base_setup["HEIGHT"] / 2)
+        self.rect.center = (GAME_BASE_SETUP["WIDTH"] / 2, GAME_BASE_SETUP["HEIGHT"] / 2)
     
     # getter and setter
     def getLocation(self): return self.location
@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
             self.location = location_change((0, 1), self.location)
         else:
-            self.rect.right = game_base_setup["WIDTH"]
+            self.rect.right = GAME_BASE_SETUP["WIDTH"]
         
     def update(self):
         # get a class that store a list of bool that determine if any key was be clicked
@@ -44,27 +44,27 @@ class Player(pygame.sprite.Sprite):
         if key_pressed[pygame.K_DOWN]: self.rect.y += self.speed[1]
             
         # setting border effect
-        if self.rect.right > game_base_setup["WIDTH"]: 
+        if self.rect.right > GAME_BASE_SETUP["WIDTH"]: 
             if (can_move_nextArea((0, 1), self.location)):
                 self.rect.left = 0
                 self.location = location_change((0, 1), self.location)
             else:
-                self.rect.right = game_base_setup["WIDTH"]
+                self.rect.right = GAME_BASE_SETUP["WIDTH"]
         if self.rect.left < 0: 
             if (can_move_nextArea((0, -1), self.location)):
-                self.rect.right = game_base_setup["WIDTH"]
+                self.rect.right = GAME_BASE_SETUP["WIDTH"]
                 self.location = location_change((0, -1), self.location)
             else:
                 self.rect.left = 0
         if self.rect.top < 0: 
             if (can_move_nextArea((-1, 0), self.location)):
-                self.rect.bottom = game_base_setup["HEIGHT"]
+                self.rect.bottom = GAME_BASE_SETUP["HEIGHT"]
                 self.location = location_change((-1, 0), self.location)
             else:
                 self.rect.top = 0
-        if self.rect.bottom > game_base_setup["HEIGHT"]: 
+        if self.rect.bottom > GAME_BASE_SETUP["HEIGHT"]: 
             if (can_move_nextArea((1, 0), self.location)):
                 self.rect.top = 0
                 self.location = location_change((1, 0), self.location)
             else:
-                self.rect.bottom = game_base_setup["HEIGHT"]
+                self.rect.bottom = GAME_BASE_SETUP["HEIGHT"]

@@ -9,8 +9,8 @@ def can_move_nextArea(vector: tuple, location: str):
     location = location_index(location)
     move_index = (location[0] + vector[0], location[1] + vector[1])
     
-    if (move_index[0] >= game_base_setup["MAP_SIZE"][0] or 
-        move_index[1] >= game_base_setup["MAP_SIZE"][1] or
+    if (move_index[0] >= GAME_SETUP["MAP_SIZE"][0] or 
+        move_index[1] >= GAME_SETUP["MAP_SIZE"][1] or
         move_index[0] < 0 or
         move_index[1] < 0):
         return False
