@@ -3,7 +3,7 @@ import pygame
 import os
 
 # import const
-from .const import *
+from .Const import *
 from .LocationFunction import *
 
 class Player(pygame.sprite.Sprite):

@@ -1,4 +1,4 @@
-from src.const import *
+from .Const import *
 import pygame
 import random
 

@@ -1,5 +1,5 @@
 import pygame
-from .const import * 
+from .Const import * 
 
 class star(pygame.sprite.Sprite):
     def __init__(self, name: str, temperture: float, color: str, location: list, size: tuple):
