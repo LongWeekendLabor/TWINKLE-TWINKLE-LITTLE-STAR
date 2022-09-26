@@ -17,10 +17,6 @@ class Player(pygame.sprite.Sprite):
         # player information variable
         self.location = "A1"
         self.health = 100    #TODO
-
-        # absolute position
-        # self.rect.x = 200
-        # self.rect.y = 200
         
         # center position
         self.rect.center = (game_base_setup["WIDTH"] / 2, game_base_setup["HEIGHT"] / 2)
