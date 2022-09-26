@@ -17,14 +17,14 @@ clock = pygame.time.Clock()
 
 # loading imgs
 # example...
-background_img = pygame.image.load(os.path.join('img', 'sample_bg.png')).convert()
-spaceship = pygame.image.load(os.path.join('img', 'sample.png')).convert()
-        
+background_img = pygame.image.load(os.path.join('img', 'background_A1.jpg')).convert()
+spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
 
 # sprite group
 all_sprites = pygame.sprite.Group()
 player = Player(spaceship)
 all_sprites.add(player)
+
 rockNumber = 3
 for i in range(rockNumber):
     trash = SpaceJunk()
@@ -45,8 +45,8 @@ while running:
     # refresh game
     all_sprites.update()    # execute update function of every sprite in group
     
-    
     # display screen
+    background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
     pygame.display.update()
