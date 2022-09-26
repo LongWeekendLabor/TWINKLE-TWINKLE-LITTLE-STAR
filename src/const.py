@@ -14,7 +14,9 @@ GAME_SETUP = {
     "MAP_SIZE" : (2, 2),
     "NUM_OF_ROCKS" : 5,
     "HP_BAR_LENGTH" : 150,
-    "HP_BAR_HEIGHT" : 15
+    "HP_BAR_HEIGHT" : 15, 
+    "LOCATION_TEXT_CENTER" : (45, GAME_BASE_SETUP["HEIGHT"] - 28),
+    "LOCATION_TEXT_SIZE" : 50
 }
 
 # define color area
