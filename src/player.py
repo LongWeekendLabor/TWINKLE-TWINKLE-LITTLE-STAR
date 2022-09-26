@@ -4,7 +4,7 @@ import os
 
 # import const
 from .const import *
-from .location_func import *
+from .LocationFunction import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, img):
