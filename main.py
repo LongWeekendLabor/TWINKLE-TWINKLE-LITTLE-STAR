@@ -29,6 +29,15 @@ def createRock():
     rock = SpaceJunk()
     all_sprites.add(rock)
     rocks.add(rock)
+    
+def draw_health(surf, hp, x, y):
+    if hp < 0:
+        hp = 0
+    fill = (hp / 100) * game_setup["HP_BAR_LENGTH"]
+    outline_rect = pygame.Rect(x, y, game_setup["HP_BAR_LENGTH"], game_setup["HP_BAR_HEIGHT"])
+    fill_rect = pygame.Rect(x, y, fill, game_setup["HP_BAR_HEIGHT"])
+    pygame.draw.rect(surf, COLOR["RED"], fill_rect)
+    pygame.draw.rect(surf, COLOR["WHITE"], outline_rect, 2)
 
 # add sprites into groups
 all_sprites.add(player)
@@ -58,6 +67,7 @@ while running:
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
+    draw_health(screen, player.health, 10, 10)
     pygame.display.update()
 
 pygame.quit()

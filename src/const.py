@@ -12,11 +12,15 @@ game_base_setup = {
 }
 
 game_setup = {
-    "NumOfRocks" : 5
+    "NumOfRocks" : 5,
+    "HP_BAR_LENGTH" : 150,
+    "HP_BAR_HEIGHT" : 15
 }
 
 # define color area
 COLOR = {
     "BLACK" : (0, 0, 0),
-    "AZURE" : (240,255,255)
+    "RED" : (255, 0, 0),
+    "AZURE" : (240, 255, 255),
+    "WHITE" : (255, 255, 255)
 }
