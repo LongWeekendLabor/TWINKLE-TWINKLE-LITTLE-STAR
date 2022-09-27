@@ -8,6 +8,7 @@ from src.Player import *
 from src.Rock import *
 from src.Star import *
 from src.BlackHole import *
+from src.SpaceStation import *
 
 # init & create a window
 pygame.init()
@@ -18,6 +19,7 @@ clock = pygame.time.Clock()
 # loading imgs
 background_img = pygame.image.load(os.path.join('img', 'background_A1.jpg')).convert()
 spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
+space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
 
 # Text font
 font_name = pygame.font.match_font("arial")
@@ -26,6 +28,7 @@ font_name = pygame.font.match_font("arial")
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
 player = Player(spaceship)
+station = SpaceStation(space_station_img)
 
 # define functions
 def createRock():
@@ -72,6 +75,10 @@ while running:
         player.health -= 20 #TODO
         createRock()
         if player.health <= 0: running = False
+    if station.getLocation() == player.getLocation():
+        all_sprites.add(station)
+    else:
+        all_sprites.remove(station)
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
