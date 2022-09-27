@@ -19,6 +19,7 @@ class Rocks(pygame.sprite.Sprite):
         #Using random to determine top or bottom orleft or right
         GAME_SETUP["RANDOMNUMBER"] = random.randrange(0,4)
         self.image = meteorite_img[GAME_SETUP["RANDOMNUMBER"]]
+        self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
 
         #Top to bottom
