@@ -1,10 +1,7 @@
-from queue import PriorityQueue
 import random
 from .Const import * 
 
-location_array = ["A1", "A2", "B1", "B2"]
-
-class Station(pygame.sprite.Sprite):
+class SpaceStation(pygame.sprite.Sprite):
     def __init__(self, image):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.scale(image, (105, 105))
@@ -13,7 +10,7 @@ class Station(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(60,964)
         self.rect.centery = random.randrange(60,452)
-        self.location = random.choice(location_array)
+        self.location = random.choice(GAME_SETUP["LOCATION_ARRAY"])
         print(self.location)
 
     def update(self):

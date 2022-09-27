@@ -16,7 +16,8 @@ GAME_SETUP = {
     "HP_BAR_LENGTH" : 150,
     "HP_BAR_HEIGHT" : 15, 
     "LOCATION_TEXT_CENTER" : (45, GAME_BASE_SETUP["HEIGHT"] - 28),
-    "LOCATION_TEXT_SIZE" : 50
+    "LOCATION_TEXT_SIZE" : 50,
+    "LOCATION_ARRAY" : ("A1", "A2", "B1", "B2")
 }
 
 # define color area
