@@ -2,6 +2,13 @@ from src.Const import *
 import pygame
 import random
 import os
+import os
+
+#Download picture
+pygame.image.load(os.path.join("img","meteorite-1.png")).convert()
+pygame.image.load(os.path.join("img","meteorite-2.png")).convert()
+pygame.image.load(os.path.join("img","meteorite-3.png")).convert()
+pygame.image.load(os.path.join("img","meteorite-4.png")).convert()
 
 
 class Rocks(pygame.sprite.Sprite):
@@ -46,9 +53,18 @@ class Rocks(pygame.sprite.Sprite):
             self.speedy = random.randrange(-3,3)
             self.rect.x = random.randrange(1025, 1030)
             self.rect.y = random.randrange(0,GAME_BASE_SETUP["HEIGHT"] - self.rect.height)
+            self.rot_degree = 3
 
+    def rotate(self):
+        self.image = pygame.transform.rotate(self.image, self.rot_degree)
+
+
+        # getter and setter
+        def getLocation(self): return self.location
+        def setLocation(self, location: str): self.location = location
 
     def update(self):
+        self.rotate()
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
