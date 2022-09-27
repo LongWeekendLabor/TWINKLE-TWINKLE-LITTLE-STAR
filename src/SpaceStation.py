@@ -11,7 +11,6 @@ class SpaceStation(pygame.sprite.Sprite):
         self.rect.centerx = random.randrange(60,964)
         self.rect.centery = random.randrange(60,452)
         self.location = self.create_location()
-        print(self.location)
 
     def update(self):
             pass
