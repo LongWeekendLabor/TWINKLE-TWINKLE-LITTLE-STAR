@@ -1,6 +1,10 @@
 from src.Const import *
 import pygame
 import random
+import os
+
+#Down load picture
+pygame.image.load(os.path.join("img",""))
 
 
 class Rocks(pygame.sprite.Sprite):
