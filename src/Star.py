@@ -1,8 +1,8 @@
 import pygame
 from .Const import * 
 
-class star(pygame.sprite.Sprite):
-    def __init__(self, name: str, temperture: float, color: str, location: list, size: tuple):
+class Star(pygame.sprite.Sprite):
+    def __init__(self, name: str, temperture: float, color: str, location: str, size: tuple):
         pygame.sprite.Sprite.__init__(self)
         self.name = name
         self.temperture = temperture
@@ -13,31 +13,29 @@ class star(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
     def update(self):
-        # get a class that store a list of bool that determine if any key was be clicked
-        key_pressed = pygame.mouse.get_pressed()
-        if key_pressed:
-            0
+            pass
 
-    def set_name(self, name: str):
+    # Setters and Getters
+    def setName(self, name: str):
         self.name = name
 
-    def set_temperture(self, temperture: float):
+    def setTemperture(self, temperture: float):
         self.temperture = temperture
 
-    def set_color(self, color: str):
+    def setColor(self, color: str):
         self.color = color
 
-    def set_location(self, location: str):
+    def setLocation(self, location: str):
         self.location = location
 
-    def get_name(self):
+    def getName(self):
         return self.name
 
-    def get_temperture(self):
+    def getTemperture(self):
         return self.temperture
 
-    def get_color(self):
+    def getColor(self):
         return self.color
 
-    def get_location(self):
+    def getLocation(self):
         return self.location
