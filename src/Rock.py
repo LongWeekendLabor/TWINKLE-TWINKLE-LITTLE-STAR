@@ -3,7 +3,7 @@ import pygame
 import random
 
 
-class Rock(pygame.sprite.Sprite):
+class Rocks(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((30, 40))

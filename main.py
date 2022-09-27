@@ -8,6 +8,7 @@ from src.Player import *
 from src.Rock import *
 from src.Star import *
 from src.BlackHole import *
+from src.Rock import Rocks
 
 # init & create a window
 pygame.init()
@@ -29,7 +30,7 @@ player = Player(spaceship)
 
 # define functions
 def createRock():
-    rock = Rock()
+    rock = Rocks()
     all_sprites.add(rock)
     rocks.add(rock)
     
