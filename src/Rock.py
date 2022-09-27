@@ -2,7 +2,6 @@ from src.Const import *
 import pygame
 import random
 import os
-import os
 
 #Download picture
 pygame.image.load(os.path.join("img","meteorite-1.png")).convert()
