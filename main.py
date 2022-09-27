@@ -79,7 +79,7 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.health -= 5 #TODO
+        player.health -= 20 #TODO
         createRock()
         if player.health <= 0: running = False
     
@@ -90,7 +90,7 @@ while running:
             if player.health >= 100: 
                 player.health = 100
             else:
-                player.health += 50
+                player.health += 15
             if player.health <= 0: running = False
     else:
         all_sprites.remove(station)
