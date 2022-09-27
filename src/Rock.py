@@ -11,7 +11,7 @@ pygame.image.load(os.path.join("img","meteorite-3.png")).convert()
 pygame.image.load(os.path.join("img","meteorite-4.png")).convert()
 
 
-class Rockss(pygame.sprite.Sprite):
+class Rocks(pygame.sprite.Sprite):
     def __init__(self):
         #Down load picture
         meteorite1_img = pygame.image.load(os.path.join("img","meteorite-1.png")).convert()
