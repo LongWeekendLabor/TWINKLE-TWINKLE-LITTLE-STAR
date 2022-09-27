@@ -3,18 +3,24 @@ import pygame
 import random
 import os
 
-#Down load picture
-pygame.image.load(os.path.join("img",""))
-
 
 class Rocks(pygame.sprite.Sprite):
     def __init__(self):
+        #Down load picture
+        meteorite1_img = pygame.image.load(os.path.join("img","meteorite-1.png")).convert()
+        meteorite2_img = pygame.image.load(os.path.join("img","meteorite-2.png")).convert()
+        meteorite3_img = pygame.image.load(os.path.join("img","meteorite-3.png")).convert()
+        meteorite4_img = pygame.image.load(os.path.join("img","meteorite-4.png")).convert()
+        meteorite_img = [meteorite1_img,meteorite2_img,meteorite3_img,meteorite4_img]
+
+
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((30, 40))
-        self.image.fill(COLOR["AZURE"])
-        self.rect = self.image.get_rect()
+
         #Using random to determine top or bottom orleft or right
         GAME_SETUP["RANDOMNUMBER"] = random.randrange(0,4)
+        self.image = meteorite_img[GAME_SETUP["RANDOMNUMBER"]]
+        self.rect = self.image.get_rect()
+
         #Top to bottom
         if GAME_SETUP["RANDOMNUMBER"] == 0:
             self.speedy = random.randrange(1,5)
@@ -44,6 +50,7 @@ class Rocks(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
+        
         #Top to bottom
         if self.rect.top > GAME_BASE_SETUP["HEIGHT"] or self.rect.right > GAME_BASE_SETUP["WIDTH"] or self.rect.left < 0 and GAME_SETUP["RANDOMNUMBER"] == 0:
             self.speedy = random.randrange(1,5)
