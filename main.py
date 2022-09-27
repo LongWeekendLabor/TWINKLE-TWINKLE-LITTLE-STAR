@@ -3,11 +3,12 @@ import random
 import os
 
 # import sources
-from src.const import *
-from src.player import *
-from src.SpaceJunck import *
-from src.star_class import *
+from src.Const import *
+from src.Player import *
+from src.Rock import *
+from src.Star import *
 from src.BlackHole import *
+from src.SpaceStation import *
 
 # init & create a window
 pygame.init()
@@ -18,15 +19,20 @@ clock = pygame.time.Clock()
 # loading imgs
 background_img = pygame.image.load(os.path.join('img', 'background_A1.jpg')).convert()
 spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
+space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
+
+# Text font
+font_name = pygame.font.match_font("arial")
 
 # sprite group
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
 player = Player(spaceship)
+station = SpaceStation(space_station_img)
 
 # define functions
 def createRock():
-    rock = SpaceJunk()
+    rock = Rock()
     all_sprites.add(rock)
     rocks.add(rock)
     
@@ -38,6 +44,13 @@ def draw_health(surf, hp, x, y):
     fill_rect = pygame.Rect(x, y, fill, GAME_SETUP["HP_BAR_HEIGHT"])
     pygame.draw.rect(surf, COLOR["RED"], fill_rect)
     pygame.draw.rect(surf, COLOR["WHITE"], outline_rect, 2)
+
+def draw_location_text(surf, text):
+    font = pygame.font.Font(font_name, GAME_SETUP["LOCATION_TEXT_SIZE"])
+    text_surface = font.render(text, True, COLOR["WHITE"])
+    text_rect = text_surface.get_rect()
+    text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
+    surf.blit(text_surface, text_rect)
 
 # add sprites into groups
 all_sprites.add(player)
@@ -62,12 +75,17 @@ while running:
         player.health -= 20 #TODO
         createRock()
         if player.health <= 0: running = False
+    if station.getLocation() == player.getLocation():
+        all_sprites.add(station)
+    else:
+        all_sprites.remove(station)
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
     draw_health(screen, player.health, 10, 10)
+    draw_location_text(screen, player.getLocation())
     pygame.display.update()
 
 pygame.quit()
