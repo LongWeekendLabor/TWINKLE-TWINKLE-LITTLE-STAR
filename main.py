@@ -32,7 +32,7 @@ station = SpaceStation(space_station_img)
 
 # define functions
 def createRock():
-    rock = Rock()
+    rock = Rocks()
     all_sprites.add(rock)
     rocks.add(rock)
     
