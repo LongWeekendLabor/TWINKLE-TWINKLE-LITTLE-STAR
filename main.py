@@ -72,10 +72,10 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.health -= 20 #TODO
+        player.health -= 0 #TODO
         createRock()
         if player.health <= 0: running = False
-    if station.getLocation() == player.getLocation():
+    if station.chuck_check(player.getLocation()):   # check both space ship and space station's location
         all_sprites.add(station)
     else:
         all_sprites.remove(station)

@@ -10,7 +10,7 @@ class SpaceStation(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(60,964)
         self.rect.centery = random.randrange(60,452)
-        self.location = random.choice(GAME_SETUP["LOCATION_ARRAY"])
+        self.location = self.create_location()
         print(self.location)
 
     def update(self):
@@ -19,3 +19,12 @@ class SpaceStation(pygame.sprite.Sprite):
     # Setters and Getters
     def getLocation(self):
         return self.location
+
+    def create_location(self):
+        size = GAME_SETUP["MAP_SIZE"][0]
+        first = random.randrange(0,size)
+        second = random.randrange(0,size)
+        return chr(first+65) + str(second+1)
+
+    def chuck_check(self, space_ship_location: str):
+        return self.location == space_ship_location
