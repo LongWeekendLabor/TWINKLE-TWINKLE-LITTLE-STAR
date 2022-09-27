@@ -52,6 +52,13 @@ def draw_location_text(surf, text):
     text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
     surf.blit(text_surface, text_rect)
 
+def draw_location_text(surf, text):
+    font = pygame.font.Font(font_name, GAME_SETUP["LOCATION_TEXT_SIZE"])
+    text_surface = font.render(text, True, COLOR["WHITE"])
+    text_rect = text_surface.get_rect()
+    text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
+    surf.blit(text_surface, text_rect)
+
 # add sprites into groups
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
@@ -85,6 +92,7 @@ while running:
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
     draw_health(screen, player.health, 10, 10)
+    draw_location_text(screen, player.getLocation())
     draw_location_text(screen, player.getLocation())
     pygame.display.update()
 
