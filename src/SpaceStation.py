@@ -5,7 +5,7 @@ from .Const import *
 class SpaceStation(pygame.sprite.Sprite):
     def __init__(self, image):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.transform.scale(image, (61, 80))
+        self.image = pygame.transform.scale(image, (90, 80))
         self.ori_image = self.image
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
@@ -19,13 +19,13 @@ class SpaceStation(pygame.sprite.Sprite):
             pass
 
     # Setters and Getters
-    def setIsUsed(self, bool):
+    def setIsUsed(self, bool: bool):
         self.isUsed = bool
 
     def getLocation(self):
         return self.location
 
-    def getIsUsed(self, bool: bool):
+    def getIsUsed(self):
         return self.isUsed
 
     def create_location(self):
