@@ -22,3 +22,6 @@ def location_change(vector: tuple, location: str):
     location = location_index(location)
     new_location = chr(location[0] + vector[0] + 65) + str(location[1] + vector[1] + 1)
     return new_location
+
+def tuple_to_location(location: tuple):
+     return chr(location[0]+65) + str(location[1]+1)

@@ -27,6 +27,10 @@ font_name = pygame.font.match_font("arial")
 # sprite group
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
+stations = pygame.sprite.Group()
+stars = pygame.sprite.Group()
+
+# create sprite
 player = Player(spaceship)
 station = SpaceStation(space_station_img)
 
@@ -35,6 +39,11 @@ def createRock():
     rock = Rock()
     all_sprites.add(rock)
     rocks.add(rock)
+
+def addStationIntoGroup():
+    if station.alive() == False:
+        all_sprites.add(station)
+        stations.add(station)
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
@@ -55,7 +64,8 @@ def draw_location_text(surf, text):
 # add sprites into groups
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
-    
+addStationIntoGroup()
+
 # gaming loop
 running = True
 while running:
@@ -75,10 +85,24 @@ while running:
         player.health -= 20 #TODO
         createRock()
         if player.health <= 0: running = False
-    if station.getLocation() == player.getLocation():
-        all_sprites.add(station)
+    
+    # Space Station Zone
+    Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
+    for heal in Heal:
+        if not(station.getIsUsed()):
+            if player.health + 15 >= 100:
+                player.health = 100
+            else:
+                player.health += 15
+            station.setIsUsed(True)
+    
+    if not(station.chuck_check(player.getLocation())):
+        station.kill()
+        if station.getIsUsed():
+            station = SpaceStation(space_station_img)
     else:
-        all_sprites.remove(station)
+        addStationIntoGroup()
+    #End of Space Statoin Zone
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
