@@ -1,3 +1,4 @@
+from xml.sax.handler import all_properties
 import pygame
 import random
 import os
@@ -27,6 +28,7 @@ font_name = pygame.font.match_font("arial")
 # sprite group
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
+stations = pygame.sprite.Group()
 player = Player(spaceship)
 station = SpaceStation(space_station_img)
 
@@ -35,6 +37,11 @@ def createRock():
     rock = Rock()
     all_sprites.add(rock)
     rocks.add(rock)
+
+def createStation():
+    station = SpaceStation(space_station_img)
+    all_sprites.add(station)
+    stations.add(station)
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
@@ -55,7 +62,8 @@ def draw_location_text(surf, text):
 # add sprites into groups
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
-    
+stations.add(station)
+
 # gaming loop
 running = True
 while running:
@@ -72,13 +80,24 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.health -= 20 #TODO
+        player.health -= 5 #TODO
         createRock()
         if player.health <= 0: running = False
-    if station.getLocation() == player.getLocation():
+    
+    if station.chuck_check(player.getLocation()) :
         all_sprites.add(station)
+        hits = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
+        for hit in hits:
+            all_sprites.remove(station)
+            if player.health >= 100 or player.health + 15 >= 100:
+                player.health = 100
+            else:
+                player.health += 15 
+        if not(pygame.sprite.Sprite.alive(station)):
+            createStation()
     else:
-        all_sprites.remove(station)
+        if pygame.sprite.Sprite.alive(station):
+            all_sprites.remove(station)
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
