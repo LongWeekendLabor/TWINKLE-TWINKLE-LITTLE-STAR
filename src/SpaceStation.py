@@ -12,14 +12,21 @@ class SpaceStation(pygame.sprite.Sprite):
         self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)
         self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"] - 60)
         self.location = self.create_location()
+        self.isUsed = False
         print(self.getLocation())
 
     def update(self):
             pass
 
     # Setters and Getters
+    def setIsUsed(self, bool):
+        self.isUsed = bool
+
     def getLocation(self):
         return self.location
+
+    def getIsUsed(self, bool: bool):
+        return self.isUsed
 
     def create_location(self):
         size = GAME_SETUP["MAP_SIZE"][0]

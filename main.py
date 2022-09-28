@@ -1,4 +1,3 @@
-from xml.sax.handler import all_properties
 import pygame
 import random
 import os
@@ -29,6 +28,8 @@ font_name = pygame.font.match_font("arial")
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
 stations = pygame.sprite.Group()
+
+# create sprite
 player = Player(spaceship)
 station = SpaceStation(space_station_img)
 
@@ -38,10 +39,10 @@ def createRock():
     all_sprites.add(rock)
     rocks.add(rock)
 
-def createStation():
-    station = SpaceStation(space_station_img)
-    all_sprites.add(station)
-    stations.add(station)
+def addStationIntoGroup():
+    if not(pygame.sprite.Sprite.alive(station)):
+        all_sprites.add(station)
+        stations.add(station)
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
@@ -62,7 +63,7 @@ def draw_location_text(surf, text):
 # add sprites into groups
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
-stations.add(station)
+addStationIntoGroup()
 
 # gaming loop
 running = True
@@ -84,20 +85,23 @@ while running:
         createRock()
         if player.health <= 0: running = False
     
-    if station.chuck_check(player.getLocation()) :
-        all_sprites.add(station)
-        hits = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
-        for hit in hits:
-            all_sprites.remove(station)
-            if player.health >= 100 or player.health + 15 >= 100:
+    # Space Station Zone
+    Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
+    for heal in Heal:
+        if not(station.isUsed):
+            if player.health + 15 >= 100:
                 player.health = 100
             else:
-                player.health += 15 
-        if not(pygame.sprite.Sprite.alive(station)):
-            createStation()
+                player.health += 15
+            station.isUsed = True
+    
+    if not(station.chuck_check(player.getLocation())):
+        station.kill()
+        if station.isUsed:
+            station = SpaceStation(space_station_img)
     else:
-        if pygame.sprite.Sprite.alive(station):
-            all_sprites.remove(station)
+        addStationIntoGroup()
+    #End of Space Statoin Zone
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
