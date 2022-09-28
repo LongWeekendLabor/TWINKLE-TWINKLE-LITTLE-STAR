@@ -17,10 +17,12 @@ pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
 clock = pygame.time.Clock()
 
 # loading imgs
-background_img = pygame.image.load(os.path.join('img', 'background_A1.jpg')).convert()
+init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
 spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
 space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
-
+start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
+start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
+ 
 # Text font
 font_name = pygame.font.match_font("arial")
 
@@ -35,6 +37,21 @@ player = Player(spaceship)
 station = SpaceStation(space_station_img)
 
 # define functions
+def draw_init():
+    start_button_img.set_colorkey(COLOR["BLACK"])
+    screen.blit(init_background_img, (0, 0))
+    screen.blit(start_button_img, GAME_SETUP["START_BUTTON_TOPLEFT"])
+
+    pygame.display.update()
+    waiting = True
+    while waiting:
+        clock.tick(GAME_BASE_SETUP["FPS"])
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYUP:
+                waiting = False
+    
 def createRock():
     rock = Rock()
     all_sprites.add(rock)
@@ -67,8 +84,13 @@ for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
 addStationIntoGroup()
 
 # gaming loop
+show_init = True
 running = True
 while running:
+    # show the game init screen
+    if show_init:
+        draw_init()
+        show_init = False
     
     # execute at most <FPS> times in 1 sec
     clock.tick(GAME_BASE_SETUP["FPS"])
@@ -102,7 +124,6 @@ while running:
             station = SpaceStation(space_station_img)
     else:
         addStationIntoGroup()
-    #End of Space Statoin Zone
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
