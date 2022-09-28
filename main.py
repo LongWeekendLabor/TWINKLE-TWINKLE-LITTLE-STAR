@@ -40,7 +40,7 @@ def createRock():
     rocks.add(rock)
 
 def addStationIntoGroup():
-    if not(pygame.sprite.Sprite.alive(station)):
+    if not(station.alive()):
         all_sprites.add(station)
         stations.add(station)
     
@@ -81,23 +81,23 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.health -= 5 #TODO
+        player.health -= 20 #TODO
         createRock()
         if player.health <= 0: running = False
     
     # Space Station Zone
     Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
     for heal in Heal:
-        if not(station.isUsed):
+        if not(station.getIsUsed()):
             if player.health + 15 >= 100:
                 player.health = 100
             else:
                 player.health += 15
-            station.isUsed = True
+            station.setIsUsed(True)
     
     if not(station.chuck_check(player.getLocation())):
         station.kill()
-        if station.isUsed:
+        if station.getIsUsed():
             station = SpaceStation(space_station_img)
     else:
         addStationIntoGroup()
