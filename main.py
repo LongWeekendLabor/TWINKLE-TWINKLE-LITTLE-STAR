@@ -17,24 +17,50 @@ pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
 clock = pygame.time.Clock()
 
 # loading imgs
-background_img = pygame.image.load(os.path.join('img', 'background_A1.jpg')).convert()
+init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
 spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
 space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
-
+start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
+start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
+ 
 # Text font
 font_name = pygame.font.match_font("arial")
 
 # sprite group
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
+stations = pygame.sprite.Group()
+stars = pygame.sprite.Group()
+
+# create sprite
 player = Player(spaceship)
 station = SpaceStation(space_station_img)
 
 # define functions
+def draw_init():
+    start_button_img.set_colorkey(COLOR["BLACK"])
+    screen.blit(init_background_img, (0, 0))
+    screen.blit(start_button_img, GAME_SETUP["START_BUTTON_TOPLEFT"])
+
+    pygame.display.update()
+    waiting = True
+    while waiting:
+        clock.tick(GAME_BASE_SETUP["FPS"])
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYUP:
+                waiting = False
+    
 def createRock():
     rock = Rock()
     all_sprites.add(rock)
     rocks.add(rock)
+
+def addStationIntoGroup():
+    if station.alive() == False:
+        all_sprites.add(station)
+        stations.add(station)
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
@@ -55,10 +81,16 @@ def draw_location_text(surf, text):
 # add sprites into groups
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
-    
+addStationIntoGroup()
+
 # gaming loop
+show_init = True
 running = True
 while running:
+    # show the game init screen
+    if show_init:
+        draw_init()
+        show_init = False
     
     # execute at most <FPS> times in 1 sec
     clock.tick(GAME_BASE_SETUP["FPS"])
@@ -75,10 +107,23 @@ while running:
         player.health -= 20 #TODO
         createRock()
         if player.health <= 0: running = False
-    if station.getLocation() == player.getLocation():
-        all_sprites.add(station)
+    
+    # Space Station Zone
+    Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
+    for heal in Heal:
+        if not(station.getIsUsed()):
+            if player.health + 15 >= 100:
+                player.health = 100
+            else:
+                player.health += 15
+            station.setIsUsed(True)
+    
+    if not(station.chuck_check(player.getLocation())):
+        station.kill()
+        if station.getIsUsed():
+            station = SpaceStation(space_station_img)
     else:
-        all_sprites.remove(station)
+        addStationIntoGroup()
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
