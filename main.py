@@ -28,6 +28,7 @@ font_name = pygame.font.match_font("arial")
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
 stations = pygame.sprite.Group()
+stars = pygame.sprite.Group()
 
 # create sprite
 player = Player(spaceship)
@@ -40,7 +41,7 @@ def createRock():
     rocks.add(rock)
 
 def addStationIntoGroup():
-    if not(station.alive()):
+    if station.alive() == False:
         all_sprites.add(station)
         stations.add(station)
     

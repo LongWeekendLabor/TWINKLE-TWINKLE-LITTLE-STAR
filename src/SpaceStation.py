@@ -32,9 +32,10 @@ class SpaceStation(pygame.sprite.Sprite):
         return self.isUsed
 
     def create_location(self):
-        size = GAME_SETUP["MAP_SIZE"][0]
-        x = random.randrange(0, size)
-        y = random.randrange(0, size)
+        size_x = GAME_SETUP["MAP_SIZE"][0]
+        size_y = GAME_SETUP["MAP_SIZE"][1]
+        x = random.randrange(0, size_x)
+        y = random.randrange(0, size_y)
         input = (x, y)
         return tuple_to_location(input)
 
