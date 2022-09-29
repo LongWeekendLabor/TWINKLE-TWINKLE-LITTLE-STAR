@@ -104,18 +104,19 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.health -= 20 #TODO
+        player.setHealth(player.getHealth() - 20) #TODO
         createRock()
-        if player.health <= 0: running = False
+        if player.getHealth() <= 0: running = False
     
     # Space Station Zone
     Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
     for heal in Heal:
+        hp = player.getHealth()
         if not(station.getIsUsed()):
-            if player.health + 15 >= 100:
-                player.health = 100
+            if hp + 15 >= 100:
+                player.setHealth(100)
             else:
-                player.health += 15
+                player.setHealth(hp + 15)
             station.setIsUsed(True)
     
     if not(station.chuck_check(player.getLocation())):
@@ -129,7 +130,7 @@ while running:
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
-    draw_health(screen, player.health, 10, 10)
+    draw_health(screen, player.getHealth(), 10, 10)
     draw_location_text(screen, player.getLocation())
     pygame.display.update()
 
