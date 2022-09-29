@@ -5,47 +5,49 @@ from .Const import *
 class SpaceStation(pygame.sprite.Sprite):
     def __init__(self, image):
         pygame.sprite.Sprite.__init__(self)
+        
+        # public variables
         self.image = pygame.transform.scale(image, (90, 80))
         self.image.set_colorkey(COLOR["BLACK"])
-        self.ori_image = self.image
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)
         self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"] - 60)
-        self.location = self.create_location()
-        self.isUsed = False
-        self.total_degree = 0
-        self.rot_degree = random.randrange(-3, 3)
-        print(self.getLocation())
+        
+        # private variables
+        self.__ori_image = self.image
+        self.__location = self.__create_location()
+        self.__isUsed = False
+        self.__total_degree = 0
+        self.__rot_degree = random.randrange(-3, 3)
+        
+        print(self.__location)
 
+
+    # public methods
     def update(self):
-            # self.rotate()
-            pass
+        # self.__rotate()
+        pass
 
     # Setters and Getters
-    def setIsUsed(self, bool: bool):
-        self.isUsed = bool
+    def setIsUsed(self, bool: bool): self.__isUsed = bool
+    def getIsUsed(self): return self.__isUsed
+    def getLocation(self): return self.__location
 
-    def getLocation(self):
-        return self.location
-
-    def getIsUsed(self):
-        return self.isUsed
-
-    def create_location(self):
+    def chuck_check(self, space_ship_location: str): return self.__location == space_ship_location
+        
+    # private methods
+    def __create_location(self):
         size_x = GAME_SETUP["MAP_SIZE"][0]
         size_y = GAME_SETUP["MAP_SIZE"][1]
         x = random.randrange(0, size_x)
         y = random.randrange(0, size_y)
         input = (x, y)
         return tuple_to_location(input)
-
-    def chuck_check(self, space_ship_location: str):
-        return self.location == space_ship_location
-
-    def rotate(self):
-        self.total_degree += self.rot_degree
-        self.total_degree = self.total_degree % 360
-        self.image = pygame.transform.rotate(self.image, self.total_degree)
+    
+    def __rotate(self):
+        self.__total_degree += self.__rot_degree
+        self.__total_degree = self.__total_degree % 360
+        self.image = pygame.transform.rotate(self.__ori_image, self.__total_degree)
         center = self.rect.center
         self.rect = self.image.get_rect()
         self.rect.center = center
