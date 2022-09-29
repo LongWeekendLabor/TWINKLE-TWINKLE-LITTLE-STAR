@@ -51,6 +51,11 @@ def draw_init():
                 pygame.quit()
             elif event.type == pygame.KEYUP:
                 waiting = False
+                
+def draw_plot():
+    screen.fill(COLOR["BLACK"])
+    pygame.display.update()
+    pygame.time.delay(3000)
     
 def createRock():
     rock = Rock()
