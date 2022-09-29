@@ -32,14 +32,6 @@ class Player(pygame.sprite.Sprite):
     def getHealth(self): return self.__health
     def setLocation(self, location: str): self.__location = location
     def setHealth(self, health: int): self.__health = health 
-
-    # The ship moves to the next location or stops in place
-    def location_change_or_stop(self, vector: tuple):
-        if (can_move_nextArea((0, 1), self.__location)):
-            self.rect.left = 0
-            self.__location = location_change((0, 1), self.__location)
-        else:
-            self.rect.right = GAME_BASE_SETUP["WIDTH"]
         
     def update(self):
         # get a class that store a list of bool that determine if any key was be clicked
