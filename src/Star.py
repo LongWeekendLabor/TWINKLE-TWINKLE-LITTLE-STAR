@@ -10,6 +10,11 @@ first = list(default.keys())
 class Star(pygame.sprite.Sprite):
     def __init__(self, name: str, temperture: float, color: str):
         pygame.sprite.Sprite.__init__(self)
+
+        # Get images
+        star_img = []
+        for i in range(3):
+            star_img.append(pygame.image.load(os.path.join("img", f"star{i+1}.png")).convert())
         
         # public variables
         self.image = pygame.Surface((30,30))
