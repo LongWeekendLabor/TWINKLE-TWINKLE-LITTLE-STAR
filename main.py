@@ -115,7 +115,7 @@ while running:
     
     # Space Station Zone
     Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
-    for heal in Heal:
+    if Heal:
         hp = player.getHealth()
         if not(station.getIsUsed()):
             if hp + 15 >= 100:
