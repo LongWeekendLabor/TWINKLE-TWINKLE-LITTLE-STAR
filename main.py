@@ -130,6 +130,11 @@ while running:
             station = SpaceStation(space_station_img)
     else:
         addStationIntoGroup()
+
+    # # Star Zone
+    # Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
+    # if Create:
+    #     draw_plot()
     
     # display screen
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
