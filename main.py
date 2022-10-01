@@ -93,7 +93,7 @@ def read_story(src):
                 dialogue.setText(textLine[Key_up_times][0])
                 dialogue_2.setText(textLine[Key_up_times][1])
                 Key_up_times += 1
-                background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
+                background_img = BGlist[0][0]
                 screen.blit(background_img, (0, 0))
                 screen.blit(dialogue_bg, (0, 300))
                 all_sprites.draw(screen)
