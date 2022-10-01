@@ -6,7 +6,7 @@ import os
 class Rock(pygame.sprite.Sprite):
 
     def __init__(self):
-        # Down load picture
+        # Loading image
         meteorite1_img = pygame.image.load(os.path.join("img","meteorite-1.png")).convert()
         meteorite2_img = pygame.image.load(os.path.join("img","meteorite-2.png")).convert()
         meteorite3_img = pygame.image.load(os.path.join("img","meteorite-3.png")).convert()
