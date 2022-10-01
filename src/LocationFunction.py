@@ -1,4 +1,5 @@
 # import model
+import json
 from .Const import *
 
 # location (str) change to index
@@ -41,3 +42,15 @@ def read_txt(src):
         textLine.append(line)
     return textLine
 
+def json_read():
+    with open("./story/script.json", mode="r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    nameList = list(data.keys())
+    text_src = []
+    chuck = []
+    for i in nameList:
+        print(data[i]["text_src"])
+        text_src.append(data[i]["text_src"])
+        chuck.append(data[i]["location"])
+    return nameList, text_src, chuck

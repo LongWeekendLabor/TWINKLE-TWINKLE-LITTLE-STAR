@@ -37,6 +37,12 @@ heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
 # Text font
 font_name = os.path.join('font', 'voltergoldfish.ttf')
 
+# json information
+get_json = json_read()
+nameList = get_json[0]
+text_src = get_json[1]
+chuck = get_json[2]
+
 # sprite group
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
@@ -151,7 +157,7 @@ createBlackHole()
 
 # gaming loop
 show_init = True
-story = True
+story = False
 running = True
 lastPlayerLocation = player.getLocation()
 while running:
@@ -172,7 +178,7 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.setHealth(player.getHealth() - 20) #TODO
+        player.setHealth(player.getHealth() - 0) #TODO
         createRock()
         if player.getHealth() <= 0: running = False
         damage_sound.play()
@@ -207,6 +213,13 @@ while running:
             station = SpaceStation()
     else:
         addStationIntoGroup()
+
+    if bool(chuck.count(player.getLocation())):
+        if not(stars.has()):
+            star = Star()
+            stars.add(star)
+    else:
+        stars.empty()
         
     all_sprites.add(blackhole)
     endGame = pygame.sprite.spritecollide(player, blackHole, False, pygame.sprite.collide_circle)
@@ -230,6 +243,7 @@ while running:
         story = False
 
     all_sprites.draw(screen)
+    stars.draw(screen)
     draw_health(screen, player.getHealth(), 10, 10)
     draw_location_text(screen, player.getLocation())
     pygame.display.update()
