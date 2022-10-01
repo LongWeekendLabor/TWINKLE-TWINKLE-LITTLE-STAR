@@ -18,8 +18,6 @@ clock = pygame.time.Clock()
 
 # loading imgs
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
-spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
-space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
 start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
 start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
  
@@ -33,8 +31,8 @@ stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
 
 # create sprite
-player = Player(spaceship)
-station = SpaceStation(space_station_img)
+player = Player()
+station = SpaceStation()
 
 # define functions
 def draw_init():
@@ -83,6 +81,12 @@ def draw_location_text(surf, text):
     text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
     surf.blit(text_surface, text_rect)
 
+# def createStar():
+#     s = Star()
+#     ss = Star()
+#     all_sprites.add(s)
+#     all_sprites.add(ss)
+
 # add sprites into groups
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
@@ -130,6 +134,14 @@ while running:
             station = SpaceStation(space_station_img)
     else:
         addStationIntoGroup()
+    
+    # all_sprites.add(star)
+    # all_sprites.add(star2)
+    # if not(star.check_leave_current_chuck(star.getLocation(), player.getLocation())):
+    #     star.kill()
+    #     star2.kill()
+    #     createStar()
+    #     star.setLocation(player.getLocation())
 
     # # Star Zone
     # Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)

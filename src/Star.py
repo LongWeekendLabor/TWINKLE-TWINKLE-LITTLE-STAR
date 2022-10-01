@@ -1,30 +1,35 @@
-import json
 import random
 from .Const import * 
 
-with open("Star.json", mode="r", encoding="utf-8") as file:
-    data = json.load(file)
-default = data["default"]
-first = list(default.keys())
+# import json
+# with open("Star.json", mode="r", encoding="utf-8") as file:
+#     data = json.load(file)
+# default = data["default"]
+# first = list(default.keys())
 
+# name: str, temperture: float, color: str
 class Star(pygame.sprite.Sprite):
-    def __init__(self, name: str, temperture: float, color: str):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self):
 
-        # Get images
+         # Loading images
         star_img = []
         for i in range(3):
             star_img.append(pygame.image.load(os.path.join("img", f"star{i+1}.png")).convert())
+            
+        pygame.sprite.Sprite.__init__(self)
         
         # public variables
-        self.image = pygame.Surface((30,30))
+        self.image = pygame.transform.scale(random.choice(star_img), (40, 40))
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
+        self.rect.x = random.randrange(30,GAME_BASE_SETUP["WIDTH"]-30)
+        self.rect.y = random.randrange(30,GAME_BASE_SETUP["HEIGHT"]-30)
+        self.__location = "A1"
         
         # private variables
-        self.__name = name
-        self.__temperture = temperture
-        self.__color = color
+        # self.__name = name
+        # self.__temperture = temperture
+        # self.__color = color
 
     # public methods
     def update(self):
