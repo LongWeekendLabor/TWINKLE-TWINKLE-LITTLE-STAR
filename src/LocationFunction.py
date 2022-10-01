@@ -25,3 +25,19 @@ def location_change(vector: tuple, location: str):
 
 def tuple_to_location(location: tuple):
      return chr(location[0]+65) + str(location[1]+1)
+
+def read_txt(src):
+    with open(src, mode='r', encoding='utf-8') as file:
+        readLine = file.read().split("\n\n")
+    textLine = []
+    for i in readLine:
+        line = []
+        if len(i) > 34:
+            line.append(i[:34])
+            line.append(i[34:])
+        else:
+            line.append(i)
+            line.append("")
+        textLine.append(line)
+    return textLine
+
