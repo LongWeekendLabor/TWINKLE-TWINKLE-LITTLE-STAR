@@ -35,7 +35,7 @@ damage_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'damage.mp3'))
 heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
  
 # Text font
-font_name = pygame.font.match_font("arial")
+font_name = os.path.join('font', 'voltergoldfish.ttf')
 
 # sprite group
 all_sprites = pygame.sprite.Group()
