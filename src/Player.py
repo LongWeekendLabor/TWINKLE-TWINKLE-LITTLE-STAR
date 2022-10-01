@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
         
         # private variables
         self.__ori_img = self.image
-        self.__speed = [3, 3]
+        self.__speed = [2, 2]
         self.__last = 0
         
         # player information variables
