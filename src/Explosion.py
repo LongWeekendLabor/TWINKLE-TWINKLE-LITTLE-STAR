@@ -9,8 +9,8 @@ class Explosion(pygame.sprite.Sprite):
         
         # Loading images
         expl_anim = []
-        for i in range(9):
-            expl_img = pygame.image.load(os.path.join('img', 'explosion', f'expl{i}.png')).convert()
+        for i in range(6):
+            expl_img = pygame.image.load(os.path.join('img', 'explosion', f'{i + 1}.png')).convert()
             expl_img.set_colorkey(COLOR["BLACK"])
             expl_anim.append(pygame.transform.scale(expl_img, (size, size)))
         

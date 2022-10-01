@@ -177,7 +177,7 @@ while running:
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
         player.setHealth(player.getHealth() - hit.radius)
-        expl = Explosion(hit.rect.center, hit.rect.width)
+        expl = Explosion(hit.rect.center, hit.rect.width * 1.5)
         all_sprites.add(expl)
         damage_sound.play()
         createRock()
