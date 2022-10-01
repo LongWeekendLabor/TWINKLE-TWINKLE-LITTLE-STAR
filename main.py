@@ -1,3 +1,4 @@
+from ast import Pass
 import pygame
 import random
 import os
@@ -24,6 +25,8 @@ for i in range(GAME_SETUP["MAP_SIZE"][0]):
 
 # loading imgs
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
+spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
+space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
 start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
 start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
 
@@ -39,10 +42,12 @@ all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
 stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
+blackHole = pygame.sprite.Group()
 
 # create sprite
 player = Player()
 station = SpaceStation()
+blackhole = BlackHole()
 
 # define functions
 def draw_init():
@@ -84,6 +89,9 @@ def addStationIntoGroup():
     if station.alive() == False:
         all_sprites.add(station)
         stations.add(station)
+
+def createBlackHole():
+    pass
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
@@ -105,6 +113,7 @@ def draw_location_text(surf, text):
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
 addStationIntoGroup()
+createBlackHole()
 
 # gaming loop
 show_init = True
@@ -163,12 +172,17 @@ while running:
             station = SpaceStation()
     else:
         addStationIntoGroup()
+        
+    all_sprites.add(blackhole)
+    endGame = pygame.sprite.spritecollide(player, blackHole, False, pygame.sprite.collide_circle)
+    if not(blackhole.chuck_check(player.getLocation())):
+        blackhole.kill()
 
     # # Star Zone
     # Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
     # if Create:
     #     draw_plot()
-    
+
     # display screen
     # background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
     BGindex = location_index(player.getLocation())

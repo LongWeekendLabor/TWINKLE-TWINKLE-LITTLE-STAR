@@ -7,7 +7,7 @@ from .LocationFunction import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
-
+    
         # Loading image
         image = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
 

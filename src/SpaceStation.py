@@ -24,7 +24,7 @@ class SpaceStation(pygame.sprite.Sprite):
         self.__total_degree = 0
         self.__rot_degree = 0.05
         
-        print(self.__location)
+        #print(self.__location)
 
 
     # public methods
