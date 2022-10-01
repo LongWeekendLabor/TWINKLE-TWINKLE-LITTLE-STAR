@@ -70,10 +70,8 @@ def draw_init():
                 gaming_BGM = pygame.mixer.music.load(os.path.join('sound', 'BGM', 'gaming.mp3'))
                 pygame.mixer.music.play(-1)
 
-def read_story(src):
+def read_story(src, bg):
     textLine = read_txt(src)
-    waiting = True
-    Key_up_times = 1
     dialogue = Dialogue(textLine[0][0], (90, 350))
     dialogue_2 = Dialogue(textLine[0][1], (90, 380))
     story_text.add(dialogue)
@@ -84,6 +82,8 @@ def read_story(src):
     dialogue_bg.set_alpha(150)
     screen.blit(dialogue_bg, (0, 300))
 
+    waiting = True
+    Key_up_times = 1
     while waiting:
         clock.tick(GAME_BASE_SETUP["FPS"])
         for event in pygame.event.get():
@@ -93,10 +93,8 @@ def read_story(src):
                 dialogue.setText(textLine[Key_up_times][0])
                 dialogue_2.setText(textLine[Key_up_times][1])
                 Key_up_times += 1
-                background_img = BGlist[0][0]
-                screen.blit(background_img, (0, 0))
+                screen.blit(bg, (0, 0))
                 screen.blit(dialogue_bg, (0, 300))
-                all_sprites.draw(screen)
 
         if Key_up_times >= len(textLine):
             waiting = False
@@ -225,13 +223,13 @@ while running:
     BGindex = location_index(player.getLocation())
     background_img = BGlist[BGindex[0]][BGindex[1]]
     screen.blit(background_img, (0, 0))
-    all_sprites.draw(screen)
 
     # read story
     if story:
-        read_story("./story/start.txt")
+        read_story("./story/start.txt", background_img)
         story = False
 
+    all_sprites.draw(screen)
     draw_health(screen, player.getHealth(), 10, 10)
     draw_location_text(screen, player.getLocation())
     pygame.display.update()
