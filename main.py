@@ -158,7 +158,7 @@ createBlackHole()
 
 # gaming loop
 show_init = True
-story = False
+story = True
 running = True
 lastPlayerLocation = player.getLocation()
 while running:
@@ -179,7 +179,7 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.setHealth(player.getHealth() - 0) #TODO
+        player.setHealth(player.getHealth() - 20) #TODO
         createRock()
         if player.getHealth() <= 0: running = False
         damage_sound.play()
