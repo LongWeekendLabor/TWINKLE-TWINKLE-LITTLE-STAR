@@ -200,10 +200,10 @@ while running:
     if Heal:
         hp = player.getHealth()
         if not(station.getIsUsed()):
-            if hp + 15 >= 100:
+            if hp + GAME_SETUP["STATION_HEAL"] >= 100:
                 player.setHealth(100)
             else:
-                player.setHealth(hp + 15)
+                player.setHealth(hp + GAME_SETUP["STATION_HEAL"])
             heal_sound.play()
             station.setIsUsed(True)
     
