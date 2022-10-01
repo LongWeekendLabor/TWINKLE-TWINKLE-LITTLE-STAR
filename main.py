@@ -115,9 +115,9 @@ def createRock():
     all_sprites.add(rock)
     rocks.add(rock)
     
-def RecreateRock(rock: Rock):
+def RecreateRock(rock: Rock, RandomMode = False):
     rock.kill()
-    newRock = Rock()
+    newRock = Rock(RandomMode)
     rocks.add(newRock)
     all_sprites.add(newRock)
 
@@ -192,11 +192,13 @@ while running:
         if rock.isOutOfBoundary(): RecreateRock(rock)
     
     if lastPlayerLocation != player.getLocation():
-        for rock in rockList: RecreateRock(rock)
+        for rock in rockList: RecreateRock(rock, True)
         lastPlayerLocation = player.getLocation()
         
     if len(rockList) > GAME_SETUP["NUM_OF_ROCKS"]:
         for rock in rockList: rock.kill()
+    elif len(rockList) < GAME_SETUP["NUM_OF_ROCKS"]:
+        createRock()
     
     # Space Station Zone
     Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
