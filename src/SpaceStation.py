@@ -7,7 +7,7 @@ class SpaceStation(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # public variables
-        self.image = pygame.transform.scale(image, (90, 80))
+        self.image = pygame.transform.scale(image, (198, 120))
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)
@@ -18,15 +18,13 @@ class SpaceStation(pygame.sprite.Sprite):
         self.__location = self.__create_location()
         self.__isUsed = False
         self.__total_degree = 0
-        self.__rot_degree = random.randrange(-3, 3)
+        self.__rot_degree = 0.05
         
         print(self.__location)
 
 
     # public methods
-    def update(self):
-        # self.__rotate()
-        pass
+    def update(self): self.__rotate()
 
     # Setters and Getters
     def setIsUsed(self, bool: bool): self.__isUsed = bool
