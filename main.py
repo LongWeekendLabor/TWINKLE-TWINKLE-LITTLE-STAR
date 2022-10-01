@@ -1,4 +1,3 @@
-import string
 import pygame
 import random
 import os
@@ -11,6 +10,7 @@ from src.Star import *
 from src.BlackHole import *
 from src.SpaceStation import *
 from src.Dialogue import *
+from src.Explosion import *
 
 # init & create a window
 pygame.init()
@@ -26,8 +26,6 @@ for i in range(GAME_SETUP["MAP_SIZE"][0]):
 
 # loading imgs
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
-spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
-space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
 start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
 start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
 
@@ -144,7 +142,7 @@ def draw_location_text(surf, text):
     text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
     surf.blit(text_surface, text_rect)
     
-def playBGM(BGM: string):
+def playBGM(BGM):
     pygame.mixer.music.load(os.path.join('sound', 'BGM', f'{BGM}.mp3'))
     pygame.mixer.music.set_volume(0.7)
     pygame.mixer.music.play(-1)
@@ -181,6 +179,8 @@ while running:
         player.setHealth(player.getHealth() - 20) #TODO
         createRock()
         if player.getHealth() <= 0: running = False
+        expl = Explosion(hit.rect.center, hit.rect.width)
+        all_sprites.add(expl)
         damage_sound.play()
         
     # Rock Zone
