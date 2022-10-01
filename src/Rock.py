@@ -6,12 +6,9 @@ import os
 class Rock(pygame.sprite.Sprite):
 
     def __init__(self):
-        # Loading image
-        meteorite1_img = pygame.image.load(os.path.join("img","meteorite-1.png")).convert()
-        meteorite2_img = pygame.image.load(os.path.join("img","meteorite-2.png")).convert()
-        meteorite3_img = pygame.image.load(os.path.join("img","meteorite-3.png")).convert()
-        meteorite4_img = pygame.image.load(os.path.join("img","meteorite-4.png")).convert()
-        meteorite_img = [meteorite1_img,meteorite2_img,meteorite3_img,meteorite4_img]
+        # Down load picture
+        meteorite_img = [ pygame.image.load(os.path.join("img", "meteorite", f"meteorite-{ _ + 1 }.png")).convert() for _ in range(4)]
+
         pygame.sprite.Sprite.__init__(self)
 
         # Using random to determine top or bottom or left or right
