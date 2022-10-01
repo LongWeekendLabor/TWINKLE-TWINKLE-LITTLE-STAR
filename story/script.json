@@ -1,0 +1,18 @@
+{
+    "Cepheid_variable_stars" : {
+        "text_src" : "./story/Cepheid_variable_stars",
+        "location" : "C2"
+    }, 
+    "HD_106906_b" : {
+        "text_src" : "./story/HD_106906_b", 
+        "location" : "A1"
+    }, 
+    "OY_Car" : {
+        "text_src" : "./story/OY_car", 
+        "location" : "B3"
+    }, 
+    "WASP-12b" : {
+        "text_src" : "./story/WASP-12b", 
+        "location" : "B2"
+    }
+}

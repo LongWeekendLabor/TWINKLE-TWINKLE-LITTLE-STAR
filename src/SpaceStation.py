@@ -6,12 +6,12 @@ class SpaceStation(pygame.sprite.Sprite):
     def __init__(self):
 
         # Loading image
-        image = pygame.image.load(os.path.join('img', 'space_station.png')).convert()
+        self.__pictrue = pygame.image.load(os.path.join('img', 'space_station.png')).convert()
 
         pygame.sprite.Sprite.__init__(self)
         
         # public variables
-        self.image = pygame.transform.scale(image, (198, 120))
+        self.image = pygame.transform.scale(self.__pictrue, (75, 75))
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)

@@ -37,6 +37,9 @@ heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
 # Text font
 font_name = os.path.join('font', 'voltergoldfish.ttf')
 
+# json information
+nameList, text_src, chuck = json_read()
+
 # sprite group
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
@@ -49,6 +52,7 @@ blackHole = pygame.sprite.Group()
 player = Player()
 station = SpaceStation()
 blackhole = BlackHole()
+star = Star()
 
 # define functions
 def draw_init():
@@ -207,6 +211,16 @@ while running:
             station = SpaceStation()
     else:
         addStationIntoGroup()
+
+    if bool(chuck.count(player.getLocation())):
+        if not(stars.has(star)):
+            star = Star()
+            star.setLocation(player.getLocation())
+            stars.add(star)
+        if star.getLocation() != player.getLocation() and star.getLocation() != "none":
+            stars.empty()
+    else:
+        stars.empty()
         
     all_sprites.add(blackhole)
     endGame = pygame.sprite.spritecollide(player, blackHole, False, pygame.sprite.collide_circle)
@@ -230,6 +244,7 @@ while running:
         story = False
 
     all_sprites.draw(screen)
+    stars.draw(screen)
     draw_health(screen, player.getHealth(), 10, 10)
     draw_location_text(screen, player.getLocation())
     pygame.display.update()
