@@ -73,6 +73,12 @@ def createRock():
     rock = Rock()
     all_sprites.add(rock)
     rocks.add(rock)
+    
+def RecreateRock(rock: Rock):
+    rock.kill()
+    newRock = Rock()
+    rocks.add(newRock)
+    all_sprites.add(newRock)
 
 def addStationIntoGroup():
     if station.alive() == False:
@@ -103,6 +109,7 @@ addStationIntoGroup()
 # gaming loop
 show_init = True
 running = True
+lastPlayerLocation = player.getLocation()
 while running:
     # show the game init screen
     if show_init:
@@ -125,6 +132,18 @@ while running:
         createRock()
         if player.getHealth() <= 0: running = False
         damage_sound.play()
+        
+    # Rock Zone
+    rockList = rocks.sprites()
+    for rock in rockList:
+        if rock.isOutOfBoundary(): RecreateRock(rock)
+    
+    if lastPlayerLocation != player.getLocation():
+        for rock in rockList: RecreateRock(rock)
+        lastPlayerLocation = player.getLocation()
+        
+    if len(rockList) > GAME_SETUP["NUM_OF_ROCKS"]:
+        for rock in rockList: rock.kill()
     
     # Space Station Zone
     Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
