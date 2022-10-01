@@ -1,3 +1,5 @@
+from multiprocessing.connection import wait
+import secrets
 import pygame
 import random
 import os
@@ -9,6 +11,7 @@ from src.Rock import *
 from src.Star import *
 from src.BlackHole import *
 from src.SpaceStation import *
+from src.Dialogue import *
 
 # init & create a window
 pygame.init()
@@ -31,6 +34,7 @@ all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
 stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
+story_text = pygame.sprite.Group()
 
 # create sprite
 player = Player(spaceship)
@@ -51,7 +55,42 @@ def draw_init():
                 pygame.quit()
             elif event.type == pygame.KEYUP:
                 waiting = False
-                
+
+def read_story(src):
+    textLine = read_txt(src)
+    waiting = True
+    Key_up_times = 1
+    dialogue = Dialogue(textLine[0][0], (90, 350))
+    dialogue_2 = Dialogue(textLine[0][1], (90, 380))
+    story_text.add(dialogue)
+    story_text.add(dialogue_2)
+
+    dialogue_bg = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
+    dialogue_bg.fill((50, 50, 50))
+    dialogue_bg.set_alpha(150)
+    screen.blit(dialogue_bg, (0, 300))
+
+    while waiting:
+        clock.tick(GAME_BASE_SETUP["FPS"])
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYUP:
+                dialogue.setText(textLine[Key_up_times][0])
+                dialogue_2.setText(textLine[Key_up_times][1])
+                Key_up_times += 1
+                background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
+                screen.blit(background_img, (0, 0))
+                screen.blit(dialogue_bg, (0, 300))
+                all_sprites.draw(screen)
+
+        if Key_up_times >= len(textLine):
+            waiting = False
+        else:
+            story_text.update()
+            story_text.draw(screen)
+            pygame.display.update()
+
 def draw_plot():
     screen.fill(COLOR["BLACK"])
     pygame.display.update()
@@ -90,13 +129,14 @@ addStationIntoGroup()
 
 # gaming loop
 show_init = True
+story = True
 running = True
 while running:
     # show the game init screen
     if show_init:
         draw_init()
         show_init = False
-    
+   
     # execute at most <FPS> times in 1 sec
     clock.tick(GAME_BASE_SETUP["FPS"])
     
@@ -135,6 +175,12 @@ while running:
     background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
+
+    # read story
+    if story:
+        read_story("./story/start.txt")
+        story = False
+
     draw_health(screen, player.getHealth(), 10, 10)
     draw_location_text(screen, player.getLocation())
     pygame.display.update()
