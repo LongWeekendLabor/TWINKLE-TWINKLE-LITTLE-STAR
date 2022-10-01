@@ -176,12 +176,12 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.setHealth(player.getHealth() - 20) #TODO
-        createRock()
-        if player.getHealth() <= 0: running = False
+        player.setHealth(player.getHealth() - hit.radius)
         expl = Explosion(hit.rect.center, hit.rect.width)
         all_sprites.add(expl)
         damage_sound.play()
+        createRock()
+        if player.getHealth() <= 0: running = False
         
     # Rock Zone
     rockList = rocks.sprites()
