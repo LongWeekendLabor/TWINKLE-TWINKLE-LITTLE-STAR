@@ -30,7 +30,6 @@ class Star(pygame.sprite.Sprite):
         # private variables
         # self.__name = name
         self.__location = "none"
-        print("star create")
 
     # public methods
     def update(self):

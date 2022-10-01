@@ -11,7 +11,7 @@ class SpaceStation(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # public variables
-        self.image = pygame.transform.scale(self.__pictrue, (75, 75))
+        self.image = pygame.transform.scale(self.__pictrue,GAME_SETUP["STATION_SIZE"])
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)
