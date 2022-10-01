@@ -81,12 +81,6 @@ def draw_location_text(surf, text):
     text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
     surf.blit(text_surface, text_rect)
 
-# def createStar():
-#     s = Star()
-#     ss = Star()
-#     all_sprites.add(s)
-#     all_sprites.add(ss)
-
 # add sprites into groups
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
@@ -131,17 +125,9 @@ while running:
     if not(station.chuck_check(player.getLocation())):
         station.kill()
         if station.getIsUsed():
-            station = SpaceStation(space_station_img)
+            station = SpaceStation()
     else:
         addStationIntoGroup()
-    
-    # all_sprites.add(star)
-    # all_sprites.add(star2)
-    # if not(star.check_leave_current_chuck(star.getLocation(), player.getLocation())):
-    #     star.kill()
-    #     star2.kill()
-    #     createStar()
-    #     star.setLocation(player.getLocation())
 
     # # Star Zone
     # Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
