@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(img, (75, 75))
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
+        self.radius = 20
         
         # center position
         self.rect.center = (GAME_BASE_SETUP["WIDTH"] / 2, GAME_BASE_SETUP["HEIGHT"] / 2)

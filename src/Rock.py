@@ -20,6 +20,7 @@ class Rock(pygame.sprite.Sprite):
         self.image = self.__image_ori.copy()
         self.__image_ori.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
+        self.radius = self.rect.width * 0.7 / 2
 
         # Top to bottom
         if self.__randomNumber == 0:
