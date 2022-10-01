@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
         self.__last = 0
         
         # player information variables
-        self.__location = "A1"
+        self.__location = tuple_to_location((GAME_SETUP["MAP_SIZE"][0] // 2, GAME_SETUP["MAP_SIZE"][1] // 2))
         self.__health = 100    #TODO
     
     # public methods

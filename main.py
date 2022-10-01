@@ -10,23 +10,23 @@ from src.Star import *
 from src.BlackHole import *
 from src.SpaceStation import *
 from src.Dialogue import *
+from src.Explosion import *
 
 # init & create a window
 pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
 pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
+pygame.display.set_icon(pygame.image.load(os.path.join('img', 'logo.png')))
 clock = pygame.time.Clock()
 
 # Loading Backgrounds
 BGlist = []
 for i in range(GAME_SETUP["MAP_SIZE"][0]):
-    BGlist.append([ pygame.image.load(os.path.join('img', 'background', f'{random.randrange(1, 20)}.jpg')).convert() for _ in range(GAME_SETUP["MAP_SIZE"][1])])
+    BGlist.append([ pygame.image.load(os.path.join('img', 'background', f'{random.randrange(1, GAME_SETUP["NUM_OF_BG"] + 1)}.jpg')).convert() for _ in range(GAME_SETUP["MAP_SIZE"][1])])
 
 # loading imgs
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
-spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
-space_station_img = pygame.image.load(os.path.join('img', 'space_station.png'))
 start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
 start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
 
@@ -56,8 +56,7 @@ star = Star()
 
 # define functions
 def draw_init():
-    opening_BGM = pygame.mixer.music.load(os.path.join('sound', 'BGM', 'opening.mp3'))
-    pygame.mixer.music.play(-1)
+    playBGM('opening')
     start_button_img.set_colorkey(COLOR["BLACK"])
     screen.blit(init_background_img, (0, 0))
     screen.blit(start_button_img, GAME_SETUP["START_BUTTON_TOPLEFT"])
@@ -71,8 +70,7 @@ def draw_init():
                 pygame.quit()
             elif event.type == pygame.KEYUP:
                 waiting = False
-                gaming_BGM = pygame.mixer.music.load(os.path.join('sound', 'BGM', 'gaming.mp3'))
-                pygame.mixer.music.play(-1)
+                playBGM('gaming')
 
 def read_story(src, bg):
     textLine = read_txt(src)
@@ -146,6 +144,11 @@ def draw_location_text(surf, text):
     text_rect = text_surface.get_rect()
     text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
     surf.blit(text_surface, text_rect)
+    
+def playBGM(BGM):
+    pygame.mixer.music.load(os.path.join('sound', 'BGM', f'{BGM}.mp3'))
+    pygame.mixer.music.set_volume(0.7)
+    pygame.mixer.music.play(-1)
 
 # add sprites into groups
 all_sprites.add(player)
@@ -176,10 +179,12 @@ while running:
     all_sprites.update()    # execute update function of every sprite in group
     hits = pygame.sprite.spritecollide(player, rocks, True, pygame.sprite.collide_circle)
     for hit in hits:
-        player.setHealth(player.getHealth() - 20) #TODO
+        player.setHealth(player.getHealth() - hit.radius)
+        expl = Explosion(hit.rect.center, hit.rect.width * 1.5)
+        all_sprites.add(expl)
+        damage_sound.play()
         createRock()
         if player.getHealth() <= 0: running = False
-        damage_sound.play()
         
     # Rock Zone
     rockList = rocks.sprites()
@@ -198,10 +203,10 @@ while running:
     if Heal:
         hp = player.getHealth()
         if not(station.getIsUsed()):
-            if hp + 15 >= 100:
+            if hp + GAME_SETUP["STATION_HEAL"] >= 100:
                 player.setHealth(100)
             else:
-                player.setHealth(hp + 15)
+                player.setHealth(hp + GAME_SETUP["STATION_HEAL"])
             heal_sound.play()
             station.setIsUsed(True)
     
@@ -233,7 +238,6 @@ while running:
     #     draw_plot()
 
     # display screen
-    # background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
     BGindex = location_index(player.getLocation())
     background_img = BGlist[BGindex[0]][BGindex[1]]
     screen.blit(background_img, (0, 0))
