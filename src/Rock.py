@@ -5,7 +5,7 @@ import os
 
 class Rock(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, RandomMode = False):
         
        # Loading image
         meteorite_img = [ pygame.image.load(os.path.join("img", "meteorite", f"meteorite-{ _ + 1 }.png")).convert() for _ in range(4)]
@@ -20,9 +20,11 @@ class Rock(pygame.sprite.Sprite):
         self.__image_ori.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
         self.radius = self.rect.width * 0.7 / 2
-        self.__decideLocation()
         self.__total_degree = 0
         self.__rot_degree = random.randrange(-3,3)
+        
+        if RandomMode: self.__randomLocation()
+        else: self.__decideLocation()
 
 
     # public methods
@@ -77,3 +79,10 @@ class Rock(pygame.sprite.Sprite):
             self.__speedy = random.randrange(-1,1)
             self.rect.x = random.randrange(1025, 1034)
             self.rect.y = random.randrange(0,GAME_BASE_SETUP["HEIGHT"] - self.rect.height)
+            
+    def __randomLocation(self):
+        self.__speedx = random.randrange(-3,3)
+        self.__speedy = random.randrange(-3,3)
+        self.rect.x = random.randrange(0, GAME_BASE_SETUP["WIDTH"] - self.rect.width)
+        self.rect.y = random.randrange(0, GAME_BASE_SETUP["HEIGHT"] - self.rect.height)
+        
