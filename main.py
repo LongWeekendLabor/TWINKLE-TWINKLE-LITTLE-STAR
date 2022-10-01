@@ -17,6 +17,7 @@ pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
 pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
+# pygame.display.set_icon(pygame.image.load(os.path.join('img', 'logo.png')))
 clock = pygame.time.Clock()
 
 # Loading Backgrounds
