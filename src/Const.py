@@ -11,7 +11,7 @@ GAME_BASE_SETUP = {
 }
 
 GAME_SETUP = {
-    "MAP_SIZE" : (2, 2),
+    "MAP_SIZE" : (3, 3),
     "NUM_OF_ROCKS" : 5,
     "HP_BAR_LENGTH" : 150,
     "HP_BAR_HEIGHT" : 15, 

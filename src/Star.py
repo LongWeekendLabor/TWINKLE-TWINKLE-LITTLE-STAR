@@ -8,7 +8,14 @@ from .Const import *
 # first = list(default.keys())
 
 class Star(pygame.sprite.Sprite):
+
     def __init__(self, name: str, temperture: float, color: str):
+
+        # Loading images
+        image = []
+        for i in range(3):
+            image.append(pygame.image.load(os.path.join("img", f"star{i+1}.png")).convert())
+            
         pygame.sprite.Sprite.__init__(self)
 
         # Get images
