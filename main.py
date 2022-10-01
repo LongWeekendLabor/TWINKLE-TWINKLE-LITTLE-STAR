@@ -55,6 +55,7 @@ blackHole = pygame.sprite.Group()
 player = Player()
 station = SpaceStation()
 blackhole = BlackHole()
+star = Star()
 
 # define functions
 def draw_init():
@@ -215,9 +216,12 @@ while running:
         addStationIntoGroup()
 
     if bool(chuck.count(player.getLocation())):
-        if not(stars.has()):
+        if not(stars.has(star)):
             star = Star()
+            star.setLocation(player.getLocation())
             stars.add(star)
+        if star.getLocation() != player.getLocation() and star.getLocation() != "none":
+            stars.empty()
     else:
         stars.empty()
         
