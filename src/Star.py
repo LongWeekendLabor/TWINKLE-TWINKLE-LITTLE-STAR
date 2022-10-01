@@ -2,10 +2,10 @@ import json
 import random
 from .Const import * 
 
-with open("Star.json", mode="r", encoding="utf-8") as file:
-    data = json.load(file)
-default = data["default"]
-first = list(default.keys())
+# with open("Star.json", mode="r", encoding="utf-8") as file:
+#     data = json.load(file)
+# default = data["default"]
+# first = list(default.keys())
 
 class Star(pygame.sprite.Sprite):
     def __init__(self, name: str, temperture: float, color: str):
