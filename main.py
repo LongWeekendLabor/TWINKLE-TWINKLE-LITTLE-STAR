@@ -12,6 +12,7 @@ from src.SpaceStation import *
 
 # init & create a window
 pygame.init()
+pygame.mixer.init()
 screen = pygame.display.set_mode((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
 pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
 clock = pygame.time.Clock()
@@ -23,10 +24,12 @@ for i in range(GAME_SETUP["MAP_SIZE"][0]):
 
 # loading imgs
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
-spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
-space_station_img = pygame.image.load(os.path.join('img', 'space_station.png')).convert()
 start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
 start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
+
+# Loading effect sound
+damage_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'damage.mp3'))
+heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
  
 # Text font
 font_name = pygame.font.match_font("arial")
@@ -38,11 +41,13 @@ stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
 
 # create sprite
-player = Player(spaceship)
-station = SpaceStation(space_station_img)
+player = Player()
+station = SpaceStation()
 
 # define functions
 def draw_init():
+    opening_BGM = pygame.mixer.music.load(os.path.join('sound', 'BGM', 'opening.mp3'))
+    pygame.mixer.music.play(-1)
     start_button_img.set_colorkey(COLOR["BLACK"])
     screen.blit(init_background_img, (0, 0))
     screen.blit(start_button_img, GAME_SETUP["START_BUTTON_TOPLEFT"])
@@ -56,6 +61,8 @@ def draw_init():
                 pygame.quit()
             elif event.type == pygame.KEYUP:
                 waiting = False
+                gaming_BGM = pygame.mixer.music.load(os.path.join('sound', 'BGM', 'gaming.mp3'))
+                pygame.mixer.music.play(-1)
                 
 def draw_plot():
     screen.fill(COLOR["BLACK"])
@@ -117,6 +124,7 @@ while running:
         player.setHealth(player.getHealth() - 20) #TODO
         createRock()
         if player.getHealth() <= 0: running = False
+        damage_sound.play()
     
     # Space Station Zone
     Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
@@ -127,12 +135,13 @@ while running:
                 player.setHealth(100)
             else:
                 player.setHealth(hp + 15)
+            heal_sound.play()
             station.setIsUsed(True)
     
     if not(station.chuck_check(player.getLocation())):
         station.kill()
         if station.getIsUsed():
-            station = SpaceStation(space_station_img)
+            station = SpaceStation()
     else:
         addStationIntoGroup()
     
