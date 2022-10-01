@@ -3,7 +3,11 @@ from .LocationFunction import *
 from .Const import * 
 
 class SpaceStation(pygame.sprite.Sprite):
-    def __init__(self, image):
+    def __init__(self):
+
+        # Loading image
+        image = pygame.image.load(os.path.join('img', 'space_station.png')).convert()
+
         pygame.sprite.Sprite.__init__(self)
         
         # public variables

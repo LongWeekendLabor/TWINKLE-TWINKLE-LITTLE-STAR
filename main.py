@@ -18,8 +18,6 @@ clock = pygame.time.Clock()
 
 # loading imgs
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
-spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
-space_station_img = pygame.image.load(os.path.join('img', 'space_station.png')).convert()
 start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
 start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
  
@@ -33,8 +31,8 @@ stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
 
 # create sprite
-player = Player(spaceship)
-station = SpaceStation(space_station_img)
+player = Player()
+station = SpaceStation()
 
 # define functions
 def draw_init():
@@ -127,7 +125,7 @@ while running:
     if not(station.chuck_check(player.getLocation())):
         station.kill()
         if station.getIsUsed():
-            station = SpaceStation(space_station_img)
+            station = SpaceStation()
     else:
         addStationIntoGroup()
     

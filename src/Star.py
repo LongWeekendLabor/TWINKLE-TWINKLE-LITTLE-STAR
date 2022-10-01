@@ -3,6 +3,12 @@ from .Const import *
 
 class Star(pygame.sprite.Sprite):
     def __init__(self, name: str, temperture: float, color: str, location: str, size: tuple):
+
+        # Loading images
+        image = []
+        for i in range(3):
+            image.append(pygame.image.load(os.path.join("img", f"star{i+1}.png")).convert())
+
         pygame.sprite.Sprite.__init__(self)
         
         # public variables

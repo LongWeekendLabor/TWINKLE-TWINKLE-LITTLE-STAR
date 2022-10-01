@@ -11,5 +11,3 @@ class BlackHole(pygame.sprite.Sprite):
         self.image = pygame.Surface(black_hole_setup["image_size"])
         self.image.fill(GAME_BASE_SETUP["BLACK"])
         self.rect = self.image.get_rect()
-
-
