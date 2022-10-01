@@ -1,3 +1,4 @@
+import string
 import pygame
 import random
 import os
@@ -52,8 +53,7 @@ blackhole = BlackHole()
 
 # define functions
 def draw_init():
-    opening_BGM = pygame.mixer.music.load(os.path.join('sound', 'BGM', 'opening.mp3'))
-    pygame.mixer.music.play(-1)
+    playBGM('opening')
     start_button_img.set_colorkey(COLOR["BLACK"])
     screen.blit(init_background_img, (0, 0))
     screen.blit(start_button_img, GAME_SETUP["START_BUTTON_TOPLEFT"])
@@ -67,8 +67,7 @@ def draw_init():
                 pygame.quit()
             elif event.type == pygame.KEYUP:
                 waiting = False
-                gaming_BGM = pygame.mixer.music.load(os.path.join('sound', 'BGM', 'gaming.mp3'))
-                pygame.mixer.music.play(-1)
+                playBGM('gaming')
 
 def read_story(src):
     textLine = read_txt(src)
@@ -144,6 +143,11 @@ def draw_location_text(surf, text):
     text_rect = text_surface.get_rect()
     text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
     surf.blit(text_surface, text_rect)
+    
+def playBGM(BGM: string):
+    pygame.mixer.music.load(os.path.join('sound', 'BGM', f'{BGM}.mp3'))
+    pygame.mixer.music.set_volume(0.7)
+    pygame.mixer.music.play(-1)
 
 # add sprites into groups
 all_sprites.add(player)
