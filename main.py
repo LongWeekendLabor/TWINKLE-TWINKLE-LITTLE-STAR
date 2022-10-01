@@ -16,6 +16,11 @@ screen = pygame.display.set_mode((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEI
 pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
 clock = pygame.time.Clock()
 
+# Loading Backgrounds
+BGlist = []
+for i in range(GAME_SETUP["MAP_SIZE"][0]):
+    BGlist.append([ pygame.image.load(os.path.join('img', 'background', f'{random.randrange(1, 20)}.jpg')).convert() for _ in range(GAME_SETUP["MAP_SIZE"][1])])
+
 # loading imgs
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
 spaceship = pygame.image.load(os.path.join('img', 'spaceship.png')).convert()
@@ -132,7 +137,9 @@ while running:
         addStationIntoGroup()
     
     # display screen
-    background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
+    # background_img = pygame.image.load(os.path.join('img', f'background_{player.getLocation()}.jpg')).convert()
+    BGindex = location_index(player.getLocation())
+    background_img = BGlist[BGindex[0]][BGindex[1]]
     screen.blit(background_img, (0, 0))
     all_sprites.draw(screen)
     draw_health(screen, player.getHealth(), 10, 10)
