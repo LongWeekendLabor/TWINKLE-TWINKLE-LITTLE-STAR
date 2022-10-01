@@ -9,11 +9,12 @@ class Rock(pygame.sprite.Sprite):
         
        # Loading image
         meteorite_img = [ pygame.image.load(os.path.join("img", "meteorite", f"meteorite-{ _ + 1 }.png")).convert() for _ in range(4)]
+        meteorite_img.append(pygame.image.load(os.path.join("img", "meteorite", "Gcat.png")).convert())
 
         pygame.sprite.Sprite.__init__(self)
 
         # Using random to determine top or bottom or left or right
-        self.__direction = self.__Random()
+        self.__direction = random.randint(0, 4)
         self.__image_ori = meteorite_img[self.__Random()]
         self.image = self.__image_ori.copy()
         self.__image_ori.set_colorkey(COLOR["BLACK"])
@@ -41,7 +42,11 @@ class Rock(pygame.sprite.Sprite):
         else: return False
     
     # private methods
-    def __Random(self): return random.randrange(0,4)
+    def __Random(self): 
+        if random.randint(0, 10000) != 5487:
+            return random.randrange(0, 4)
+        else:
+            return 4
     
     def __rotate(self):
         self.__total_degree += self.__rot_degree
