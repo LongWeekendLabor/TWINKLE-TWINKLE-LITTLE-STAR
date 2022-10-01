@@ -99,10 +99,9 @@ def read_story(src, bg):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+            elif event.type == pygame.KEYUP and key_up_times >= len(textLine):
+                waiting = False
             elif event.type == pygame.KEYUP:
-                if key_up_times >= len(textLine):
-                    key_up_times += 1
-                    break
                 dialogue.setText(textLine[key_up_times][0])
                 dialogue_2.setText(textLine[key_up_times][1])
                 key_up_times += 1
@@ -112,8 +111,6 @@ def read_story(src, bg):
                 story_text.draw(screen)
                 pygame.display.update()
 
-        if key_up_times > len(textLine):
-            waiting = False
     dialogue.kill()
     dialogue_2.kill()
 
