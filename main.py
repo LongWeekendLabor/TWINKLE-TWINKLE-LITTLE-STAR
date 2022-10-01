@@ -125,6 +125,15 @@ while running:
         createRock()
         if player.getHealth() <= 0: running = False
         damage_sound.play()
+        
+    # Rock Zone
+    rockList = rocks.sprites()
+    for rock in rockList:
+        if rock.isOutOfBoundary():
+            rock.kill()
+            newRock = Rock()
+            rocks.add(newRock)
+            all_sprites.add(newRock)
     
     # Space Station Zone
     Heal = pygame.sprite.spritecollide(player, stations, False, pygame.sprite.collide_circle)
