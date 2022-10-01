@@ -38,10 +38,7 @@ heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
 font_name = os.path.join('font', 'voltergoldfish.ttf')
 
 # json information
-get_json = json_read()
-nameList = get_json[0]
-text_src = get_json[1]
-chuck = get_json[2]
+nameList, text_src, chuck = json_read()
 
 # sprite group
 all_sprites = pygame.sprite.Group()
