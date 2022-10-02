@@ -12,6 +12,7 @@ from src.SpaceStation import *
 from src.Explosion import *
 from src.StarCoin import *
 from src.LocationFunction import *
+from src.StoryBackground import *
 
 # init & create a window
 pygame.init()
@@ -55,13 +56,14 @@ stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
 story_text = pygame.sprite.Group()
 blackholes = pygame.sprite.Group()
+bg = pygame.sprite.Group()
 
 # create sprite
 player = Player()
 station = SpaceStation()
 blackhole = BlackHole()
 
-def draw_text(text: str, text_size: int, topleft: tuple, font=zhFont, background:tuple=None):
+def draw_text(text: str, text_size: int, topleft: tuple, font=enFont, background:tuple=None):
     font = pygame.font.Font(font, text_size)
     text_surface = font.render(text, True, COLOR["WHITE"], background)
     screen.blit(text_surface, topleft)
@@ -69,9 +71,8 @@ def draw_text(text: str, text_size: int, topleft: tuple, font=zhFont, background
 # define functions
 def draw_init():
     playBGM('opening')
-    start_button_img.set_colorkey(COLOR["BLACK"])
     screen.blit(init_background_img, (0, 0))
-    screen.blit(start_button_img, GAME_SETUP["START_BUTTON_TOPLEFT"])
+    draw_text("Enter to start", 20, (1024 - 150, 516 - 30), background=(0, 0, 0))
 
     pygame.display.update()
     waiting = True
@@ -139,7 +140,7 @@ def split_text(text: str, long: int): # return text list
             text += char_list[i] + " "
         print(text)
         textList.append(text)
-        char_list = char_list[long: len(char_list)]
+        char_list = char_list[long - 1: len(char_list)]
         text = ""
         
     for i in range(0, len(char_list)):
@@ -178,21 +179,28 @@ def read_story(src, bg):
                 key_up_times += 1
 
 def draw_story_scenes(star_name: str, file_name: str = None):
+    with open(os.path.join('story', f'{star_name}', 'question.json'), mode='r', encoding='utf-8') as file:
+        data = json.load(file)
     playBGM('WatchingStar')
     if file_name == None: file_name = star_name
     story_image = show_story_bg(star_name)
-    screen.blit(story_image, (0, 0))
-    draw_text("Enter to continue", 20, (1024 - 210, 512 - 30), font=enFont)
-
+    bgggg = StoryBackground(star_name, 31)
+    bg.add(bgggg)
     pygame.display.update()
     waiting = True
     while waiting:
+        bg.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    waiting = False                
+                    waiting = False
+        bg.draw(screen)
+        show_dialogue(split_text(data["info"], 10), 20, (20, 20))
+        # draw_text(f'{data["info"]}', 20, (20, 20))
+        draw_text("Enter to continue", 20, (1024 - 210, 512 - 30), font=enFont)
+        pygame.display.update()
     read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
 
 def createStarCoin():
