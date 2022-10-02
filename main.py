@@ -103,10 +103,10 @@ def show_question(star_name: str):
     gray_mask = get_gray_mask()
     screen.blit(gray_mask, (0, 0))
     draw_text("Q:", 30, (95, 70))
-    questionList = split_text(data["question"], 30)
+    questionList = split_text(data["question"], 20)
     show_dialogue(questionList, 28, (95, 110))
     for i in range(len(data["options"])):
-        optionList = split_text(f'{i + 1}. {data["options"][i]}', 30)
+        optionList = split_text(f'{i + 1}. {data["options"][i]}', 20)
         show_dialogue(optionList, 24, (130, 190 + 30 * (i + 1)))
     pygame.display.update()
 
@@ -132,13 +132,21 @@ def show_question(star_name: str):
 # split text
 def split_text(text: str, long: int): # return text list
     textList = []
-    line_index =  long
-    while len(text) > long:
-        textList.append(text[0: line_index + 1])
-        text = text[line_index + 1: len(text)]
-        line_index += long
-    if (len(text) != 0):
+    char_list = list(text.split(" "))
+    text = ""
+    while len(char_list) > long:
+        for i in range(0, long):
+            text += char_list[i] + " "
+        print(text)
         textList.append(text)
+        char_list = char_list[long: len(char_list)]
+        text = ""
+        
+    for i in range(0, len(char_list)):
+        text += char_list[i] + " "
+    if (len(char_list) != 0):
+        textList.append(text)
+    print(textList)
     return textList
 
 def show_dialogue(textList: list, size, topleft: tuple):
@@ -151,7 +159,7 @@ def read_story(src, bg):
         readLine = file.read().split("\n\n")
     textList = []
     for i in readLine:
-        textList.append(split_text(i, 33))
+        textList.append(split_text(i, 13))
     dialogue_bg = get_gray_mask()
     key_up_times = 1
     waiting = True
@@ -165,7 +173,7 @@ def read_story(src, bg):
             elif event.type == pygame.KEYUP:
                 screen.blit(bg, (0, 0))
                 screen.blit(dialogue_bg, (0, 350))
-                show_dialogue(textList[key_up_times - 1], 25, (90, 400))
+                show_dialogue(textList[key_up_times - 1], 25, (50, 370))
                 pygame.display.update()
                 key_up_times += 1
 
