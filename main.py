@@ -53,7 +53,7 @@ rocks = pygame.sprite.Group()
 stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
 story_text = pygame.sprite.Group()
-blackHole = pygame.sprite.Group()
+blackholes = pygame.sprite.Group()
 
 # create sprite
 player = Player()
@@ -147,7 +147,9 @@ def addStationIntoGroup():
         stations.add(station)
 
 def createBlackHole():
-    pass
+    all_sprites.add(blackhole)
+    blackholes.add(blackhole)
+    
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
@@ -174,7 +176,6 @@ def playBGM(BGM):
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
 addStationIntoGroup()
-createBlackHole()
 
 # gaming loop
 show_init = True
@@ -249,8 +250,8 @@ while running:
     else:
         stars.empty()
         
-    all_sprites.add(blackhole)
-    endGame = pygame.sprite.spritecollide(player, blackHole, False, pygame.sprite.collide_circle)
+    createBlackHole()
+    endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
     if not(blackhole.chuck_check(player.getLocation())):
         blackhole.kill()
 
