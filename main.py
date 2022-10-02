@@ -131,7 +131,6 @@ def show_question(star_name: str):
                     waiting = False
 
 # split text
-line_number = 33
 def split_text(text: str, long: int): # return text list
     textList = []
     line_index =  long
