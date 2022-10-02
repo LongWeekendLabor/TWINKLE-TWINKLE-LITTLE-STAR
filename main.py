@@ -239,6 +239,13 @@ while running:
     else:
         addStationIntoGroup()
 
+    # Star Zone
+    Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
+    if Create and (not player.getLocation() in readed_star):
+        readed_star.append(player.getLocation())
+        star_name = location_star[player.getLocation()]
+        draw_story_scenes(star_name)
+        
     if bool(chuck.count(player.getLocation())):
         if stars.has(star) == 0:
             star = Star()
@@ -249,17 +256,11 @@ while running:
     else:
         stars.empty()
         
+    # Blackhole Zone
     all_sprites.add(blackhole)
     endGame = pygame.sprite.spritecollide(player, blackHole, False, pygame.sprite.collide_circle)
     if not(blackhole.chuck_check(player.getLocation())):
         blackhole.kill()
-
-    # Star Zone
-    Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
-    if Create and (not player.getLocation() in readed_star):
-        readed_star.append(player.getLocation())
-        star_name = location_star[player.getLocation()]
-        draw_story_scenes(star_name)
 
     # display screen
     BGindex = location_index(player.getLocation())
