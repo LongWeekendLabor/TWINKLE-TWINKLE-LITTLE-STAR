@@ -99,14 +99,6 @@ def show_story_bg(star_name: str):
     screen.blit(story_image, (0, 0))
     return story_image
 
-# def draw_text(surf, text, size, x, y, font = zhFont):
-#     font = pygame.font.Font(font, size)
-#     text_surface = font.render(text, True, COLOR["WHITE"])
-#     text_rect = text_surface.get_rect()
-#     text_rect.centerx = x
-#     text_rect.centery = y
-#     surf.blit(text_surface, text_rect)
-
 def show_question(star_name: str):
     with open(os.path.join('story', f'{star_name}', 'question.json'), mode='r', encoding='utf-8') as file:
         data = json.load(file)
