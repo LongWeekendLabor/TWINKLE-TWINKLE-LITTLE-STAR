@@ -67,7 +67,6 @@ story_text.add(dialogue_2)
 player = Player()
 station = SpaceStation()
 blackhole = BlackHole()
-star = Star()
 
 def draw_text(text: str, text_size: int, topleft: tuple, font=zhFont, background:tuple=None):
     font = pygame.font.Font(font, text_size)
@@ -190,6 +189,12 @@ def RecreateRock(rock: Rock, RandomMode = False):
     newRock = Rock(RandomMode)
     rocks.add(newRock)
     all_sprites.add(newRock)
+    
+def createStar(center: tuple, size: int, cycle: int):
+    star = Star(center, size, cycle)
+    star.setLocation(player.getLocation())
+    stars.add(star)
+    all_sprites.add(star)    
 
 def addStationIntoGroup():
     if station.alive() == False:
@@ -293,16 +298,10 @@ while running:
         read_story(os.path.join('story', 'doge', f'{len(readed_star) - 1}.txt'), background_img)
         playBGM('gaming')
         
-    if bool(chuck.count(player.getLocation())):
-        if stars.has(star) == 0:
-            star = Star()
-            star.setLocation(player.getLocation())
-            stars.add(star)
-        if star.getLocation() != player.getLocation() and star.getLocation() != "none":
-            stars.empty()
+    if player.getLocation() in chuck:
+        if stars.__len__() == 0: createStar((512, 256), 100, 200)
     else:
-        stars.empty()
-
+        for star in stars.sprites(): star.kill()
         
     # Blackhole Zone
     endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
