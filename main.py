@@ -201,6 +201,24 @@ def draw_story_scenes(star_name: str, file_name: str = None):
         draw_text("Enter to continue", 20, (1024 - 210, 512 - 30), font=enFont)
         pygame.display.update()
     read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
+    
+def Earth(star_name: str, file_name: str = None):
+    playBGM('WatchingStar')
+    if file_name == None: file_name = star_name
+    story_image = show_story_bg(star_name)
+    pygame.display.update()
+    waiting = True
+    while waiting:
+        bg.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    waiting = False
+        draw_text("Enter to continue", 20, (1024 - 210, 512 - 30), font=enFont)
+        pygame.display.update()
+    read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
 
 def createStarCoin():
     starcoin = StarCoin(player.getEarnedStars())
@@ -339,7 +357,7 @@ while running:
         else:
             blackhole.kill()
         if endGame:
-            draw_story_scenes("Earth")
+            Earth("Earth")
             running = False
 
     # display screen
