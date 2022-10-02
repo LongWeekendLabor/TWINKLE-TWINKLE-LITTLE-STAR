@@ -1,3 +1,4 @@
+from datetime import date
 import pygame
 import random
 import os
@@ -138,7 +139,6 @@ def split_text(text: str, long: int): # return text list
     while len(char_list) > long:
         for i in range(0, long):
             text += char_list[i] + " "
-        print(text)
         textList.append(text)
         char_list = char_list[long - 1: len(char_list)]
         text = ""
@@ -147,7 +147,6 @@ def split_text(text: str, long: int): # return text list
         text += char_list[i] + " "
     if (len(char_list) != 0):
         textList.append(text)
-    print(textList)
     return textList
 
 def show_dialogue(textList: list, size, topleft: tuple):
@@ -184,8 +183,8 @@ def draw_story_scenes(star_name: str, file_name: str = None):
     playBGM('WatchingStar')
     if file_name == None: file_name = star_name
     story_image = show_story_bg(star_name)
-    bgggg = StoryBackground(star_name, 31)
-    bg.add(bgggg)
+    dyBG = StoryBackground(star_name, data["num_of_images"])
+    bg.add(dyBG)
     pygame.display.update()
     waiting = True
     while waiting:

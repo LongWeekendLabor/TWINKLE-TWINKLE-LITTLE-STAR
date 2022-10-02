@@ -3,16 +3,8 @@
         "text_src" : "./story/Cepheid_variable_stars/Cepheid_variable_stars.txt",
         "location" : "C2"
     }, 
-    "HD_106906_b" : {
-        "text_src" : "./story/HD_106906_b/HD_106906_b.txt", 
-        "location" : "A1"
-    }, 
-    "OY_Car" : {
-        "text_src" : "./story/OY_Car/OY_Car.txt", 
-        "location" : "B3"
-    }, 
-    "WASP-12b" : {
-        "text_src" : "./story/WASP-12b/WASP-12b.txt", 
-        "location" : "C3"
+    "V838" : {
+        "text_src" : "./story/V838/V838.txt",
+        "location" : "A2"
     }
 }
