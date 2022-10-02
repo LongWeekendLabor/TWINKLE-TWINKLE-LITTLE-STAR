@@ -20,9 +20,10 @@ class BlackHole(pygame.sprite.Sprite):
         self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"] - 60)
         self.__location = self.__create_location()
 
+    # public methods
     def getLocation(self): return self.__location
 
-        # private methods
+    # private methods
     def __create_location(self):
         size_x = GAME_SETUP["MAP_SIZE"][0]
         size_y = GAME_SETUP["MAP_SIZE"][1]

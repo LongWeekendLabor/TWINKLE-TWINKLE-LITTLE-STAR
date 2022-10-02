@@ -17,8 +17,8 @@ class Star(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(random.choice(self.__picture), (60, 60))
         self.image.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
-        self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"]-60)
-        self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"]-60)
+        self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)
+        self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"] - 60)
         
         # private variables
         self.__location = "none"
