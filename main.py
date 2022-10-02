@@ -161,7 +161,7 @@ def draw_story_scenes(star_name: str, file_name: str = None):
     if file_name == None: file_name = star_name
     story_image = show_story_bg(star_name)
     screen.blit(story_image, (0, 0))
-    draw_text("Enter to continue", font_name, 20, (1024 - 210, 512 - 30))
+    draw_text("Enter to continue", 20, (1024 - 210, 512 - 30), font=enFont)
 
     pygame.display.update()
     waiting = True
