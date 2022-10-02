@@ -102,7 +102,6 @@ def show_story_bg(star_name: str):
 def show_question(star_name: str):
     with open(os.path.join('story', f'{star_name}', 'question.json'), mode='r', encoding='utf-8') as file:
         data = json.load(file)
-    print(data, data["question"])
     show_story_bg(star_name)
     gray_mask = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
     gray_mask.fill((50, 50, 50))
@@ -172,9 +171,9 @@ def draw_story_scenes(star_name: str, file_name: str = None):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     waiting = False
-                    
-    playBGM('gaming')
+
     read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
+    
 def createRock():
     rock = Rock()
     all_sprites.add(rock)
@@ -286,6 +285,7 @@ while running:
         draw_story_scenes(star_name)
         show_question(star_name)
         read_story(os.path.join('story', 'doge', f'{len(readed_star)}.txt'), background_img)
+        playBGM('gaming')
         
     if bool(chuck.count(player.getLocation())):
         if stars.has(star) == 0:
