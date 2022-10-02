@@ -9,7 +9,6 @@ from src.Rock import *
 from src.Star import *
 from src.BlackHole import *
 from src.SpaceStation import *
-from src.Dialogue import *
 from src.Explosion import *
 from src.StarCoin import *
 from src.LocationFunction import *
@@ -57,12 +56,6 @@ stars = pygame.sprite.Group()
 story_text = pygame.sprite.Group()
 blackholes = pygame.sprite.Group()
 
-# dialogue class add
-dialogue = Dialogue((90, 400))
-dialogue_2 = Dialogue((90, 430))
-story_text.add(dialogue)
-story_text.add(dialogue_2)
-
 # create sprite
 player = Player()
 station = SpaceStation()
@@ -72,7 +65,6 @@ def draw_text(text: str, text_size: int, topleft: tuple, font=zhFont, background
     font = pygame.font.Font(font, text_size)
     text_surface = font.render(text, True, COLOR["WHITE"], background)
     screen.blit(text_surface, topleft)
-    pygame.display.update()
 
 # define functions
 def draw_init():
@@ -98,19 +90,26 @@ def show_story_bg(star_name: str):
     screen.blit(story_image, (0, 0))
     return story_image
 
+def get_gray_mask():
+    gray_mask = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
+    gray_mask.fill((50, 50, 50))
+    gray_mask.set_alpha(150)
+    return gray_mask
+
 def show_question(star_name: str):
     with open(os.path.join('story', f'{star_name}', 'question.json'), mode='r', encoding='utf-8') as file:
         data = json.load(file)
     show_story_bg(star_name)
-    gray_mask = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
-    gray_mask.fill((50, 50, 50))
-    gray_mask.set_alpha(150)
+    gray_mask = get_gray_mask()
     screen.blit(gray_mask, (0, 0))
-    print(data["question"])
-    draw_text(f'Q: {data["question"]}', 30, (100, 100))
+    draw_text("Q:", 30, (95, 70))
+    questionList = split_text(data["question"], 30)
+    show_dialogue(questionList, 28, (95, 110))
     for i in range(len(data["options"])):
-        draw_text(f'{i + 1}. {data["options"][i]}', 24, (130, 120 + 30 * (i + 1)))
+        optionList = split_text(f'{i + 1}. {data["options"][i]}', 30)
+        show_dialogue(optionList, 24, (130, 190 + 30 * (i + 1)))
     pygame.display.update()
+
     waiting = True
     while waiting:
         clock.tick(GAME_BASE_SETUP["FPS"])
@@ -128,32 +127,45 @@ def show_question(star_name: str):
                     if ans == data["answer"]: 
                         player.addEarnedStars()
                         createStarCoin()
-                    print(player.getEarnedStars())
                     waiting = False
+
+# split text
+def split_text(text: str, long: int): # return text list
+    textList = []
+    line_index =  long
+    while len(text) > long:
+        textList.append(text[0: line_index + 1])
+        text = text[line_index + 1: len(text)]
+        line_index += long
+    if (len(text) != 0):
+        textList.append(text)
+    return textList
+
+def show_dialogue(textList: list, size, topleft: tuple):
+    for i in range(0, len(textList)):
+        draw_text(textList[i], size, (topleft[0], topleft[1] + ((i) * 30)))
 
 # dialog read and display
 def read_story(src, bg):
-    textLine = read_txt(src)
-    dialogue_bg = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
-    dialogue_bg.fill((50, 50, 50))
-    dialogue_bg.set_alpha(150)
-
-    key_up_times = 0
+    with open(src, mode='r', encoding='utf-8') as file:
+        readLine = file.read().split("\n\n")
+    textList = []
+    for i in readLine:
+        textList.append(split_text(i, 33))
+    dialogue_bg = get_gray_mask()
+    key_up_times = 1
     waiting = True
     while waiting:
         clock.tick(GAME_BASE_SETUP["FPS"])
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            elif event.type == pygame.KEYUP and key_up_times >= len(textLine):
+            elif event.type == pygame.KEYUP and key_up_times > len(textList):
                 waiting = False
             elif event.type == pygame.KEYUP:
-                dialogue.setText(textLine[key_up_times][0])
-                dialogue_2.setText(textLine[key_up_times][1])
                 screen.blit(bg, (0, 0))
                 screen.blit(dialogue_bg, (0, 350))
-                story_text.update()
-                story_text.draw(screen)
+                show_dialogue(textList[key_up_times - 1], 25, (90, 400))
                 pygame.display.update()
                 key_up_times += 1
 
