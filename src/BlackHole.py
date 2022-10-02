@@ -18,6 +18,7 @@ class BlackHole(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)
         self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"] - 60)
+        self.radius = self.rect.width * 0.7 / 2
         self.__location = self.__create_location()
         print(self.__location)
 

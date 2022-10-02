@@ -1,3 +1,4 @@
+from enum import Flag
 import pygame
 import random
 import os
@@ -304,8 +305,8 @@ while running:
     else:
         blackhole.kill()
     if endGame:
-        print(endGame)
         draw_story_scenes("Earth")
+        running = False
 
     # display screen
     BGindex = location_index(player.getLocation())
