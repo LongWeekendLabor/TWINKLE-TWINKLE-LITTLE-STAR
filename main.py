@@ -124,9 +124,9 @@ def show_question(star_name: str):
                 elif event.key == pygame.K_4: ans = 3
                 else: ans = -1
                 
-                if ans != -1:
-                    if ans == 1: print('GOOD')
-                    else: print('OOF')
+                if ans != -1: 
+                    if ans == data["answer"]: player.addEarnedStars()
+                    print(player.getEarnedStars())
                     waiting = False
 
 # dialog read and display
@@ -283,7 +283,7 @@ while running:
         star_name = location_star[player.getLocation()]
         draw_story_scenes(star_name)
         show_question(star_name)
-        read_story(os.path.join('story', 'doge', f'{len(readed_star)}.txt'), background_img)
+        read_story(os.path.join('story', 'doge', f'{len(readed_star) - 1}.txt'), background_img)
         playBGM('gaming')
         
     if bool(chuck.count(player.getLocation())):
@@ -299,13 +299,14 @@ while running:
         
     # Blackhole Zone
     endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
-    if blackhole.chuck_check(player.getLocation()):
-        createBlackHole()
-    else:
-        blackhole.kill()
-    if endGame:
-        print(endGame)
-        draw_story_scenes("Earth")
+    if player.getEarnedStars() >= GAME_SETUP["TARGET"]:
+        if blackhole.chuck_check(player.getLocation()):
+            createBlackHole()
+        else:
+            blackhole.kill()
+        if endGame:
+            print(endGame)
+            draw_story_scenes("Earth")
 
     # display screen
     BGindex = location_index(player.getLocation())

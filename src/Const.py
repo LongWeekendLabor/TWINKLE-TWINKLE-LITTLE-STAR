@@ -22,7 +22,7 @@ GAME_SETUP = {
     "LOCATION_TEXT_SIZE" : 50,
     "START_BUTTON_TOPLEFT" : (GAME_BASE_SETUP["WIDTH"] - 140, GAME_BASE_SETUP["HEIGHT"] - 68),
     "START_BUTTON_SIZE" : (128,66),
-    "TARGET" : 5
+    "TARGET" : 3
 }
 
 # define color area
