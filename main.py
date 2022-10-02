@@ -1,4 +1,3 @@
-from posixpath import split
 import pygame
 import random
 import os
