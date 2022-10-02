@@ -37,7 +37,6 @@ for i in range(GAME_SETUP["MAP_SIZE"][0]):
 init_background_img = pygame.image.load(os.path.join('img', 'init_background.jpg')).convert()
 start_button_img = pygame.image.load(os.path.join('img', 'start_button.png')).convert()
 start_button_img = pygame.transform.scale(start_button_img, GAME_SETUP["START_BUTTON_SIZE"])
-
 # Loading effect sound
 damage_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'damage.mp3'))
 heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
@@ -56,6 +55,7 @@ stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
 story_text = pygame.sprite.Group()
 blackholes = pygame.sprite.Group()
+
 
 # dialogue class add
 dialogue = Dialogue((90, 400))
@@ -191,24 +191,6 @@ def addStationIntoGroup():
 def createBlackHole():
     all_sprites.add(blackhole)
     blackholes.add(blackhole)
-    
-def drawEarth():
-        Earth_image = pygame.image.load(os.path.join("img/story_background", 'Earth.jpg')).convert()
-        Earth_image = pygame.transform.scale(Earth_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
-        screen.blit(Earth_image, (0, 0))
-        # font = pygame.font.Font(font_name, 20)
-        # text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
-        # screen.blit(text_surface, (1024 - 210, 512 - 30))
-        pygame.display.update()
-        # waiting = True
-        # while waiting:
-        #     for event in pygame.event.get():
-        #         if event.type == pygame.QUIT:
-        #             pygame.quit()
-        #         elif event.type == pygame.KEYDOWN:
-        #             if event.key == pygame.K_RETURN:
-        #                 waiting = False
-        # read_story(script[star_name]["text_src"], Earth_image)
 
     
 def draw_health(surf, hp, x, y):
@@ -313,13 +295,14 @@ while running:
 
         
     # Blackhole Zone
-    createBlackHole()
     endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
-    
-    if not(blackhole.chuck_check(player.getLocation())):
+    if blackhole.chuck_check(player.getLocation()):
+        createBlackHole()
+    else:
         blackhole.kill()
     if endGame:
-        drawEarth()
+        print(endGame)
+        draw_story_scenes("Earth")
 
     # display screen
     BGindex = location_index(player.getLocation())
