@@ -21,6 +21,7 @@ pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
 pygame.display.set_icon(pygame.image.load(os.path.join('img', 'logo.png')))
 clock = pygame.time.Clock()
 
+# load json file
 with open('./story/star.json', mode='r', encoding='utf-8') as file:
     location_star = json.load(file)
 with open('./story/script.json', mode='r', encoding='utf-8') as file:
@@ -55,11 +56,23 @@ stars = pygame.sprite.Group()
 story_text = pygame.sprite.Group()
 blackholes = pygame.sprite.Group()
 
+# dialogue class add
+dialogue = Dialogue((90, 400))
+dialogue_2 = Dialogue((90, 430))
+story_text.add(dialogue)
+story_text.add(dialogue_2)
+
 # create sprite
 player = Player()
 station = SpaceStation()
 blackhole = BlackHole()
 star = Star()
+
+def draw_text(text: str, font_name, text_size: int, topleft: tuple, background:tuple=None):
+    font = pygame.font.Font(font_name, text_size)
+    text_surface = font.render(text, True, COLOR["WHITE"], background)
+    screen.blit(text_surface, topleft)
+    pygame.display.update()
 
 # define functions
 def draw_init():
@@ -79,19 +92,15 @@ def draw_init():
                 waiting = False
                 playBGM('gaming')
 
+# dialog read and display
 def read_story(src, bg):
     textLine = read_txt(src)
-    dialogue = Dialogue((90, 350))
-    dialogue_2 = Dialogue((90, 380))
-    story_text.add(dialogue)
-    story_text.add(dialogue_2)
     dialogue_bg = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
     dialogue_bg.fill((50, 50, 50))
     dialogue_bg.set_alpha(150)
-    screen.blit(dialogue_bg, (0, 300))
 
-    waiting = True
     key_up_times = 0
+    waiting = True
     while waiting:
         clock.tick(GAME_BASE_SETUP["FPS"])
         for event in pygame.event.get():
@@ -102,23 +111,18 @@ def read_story(src, bg):
             elif event.type == pygame.KEYUP:
                 dialogue.setText(textLine[key_up_times][0])
                 dialogue_2.setText(textLine[key_up_times][1])
-                key_up_times += 1
                 screen.blit(bg, (0, 0))
-                screen.blit(dialogue_bg, (0, 300))
+                screen.blit(dialogue_bg, (0, 350))
                 story_text.update()
                 story_text.draw(screen)
                 pygame.display.update()
-
-    dialogue.kill()
-    dialogue_2.kill()
+                key_up_times += 1
 
 def draw_story_scenes(star_name: str):
     story_image = pygame.image.load(os.path.join("img/story_background", f"{star_name}.jpg")).convert()
     story_image = pygame.transform.scale(story_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
     screen.blit(story_image, (0, 0))
-    font = pygame.font.Font(font_name, 20)
-    text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
-    screen.blit(text_surface, (1024 - 210, 512 - 30))
+    draw_text("Enter to continue", font_name, 20, (1024 - 210, 512 - 30))
     pygame.display.update()
     waiting = True
     while waiting:
@@ -160,13 +164,6 @@ def draw_health(surf, hp, x, y):
     pygame.draw.rect(surf, COLOR["RED"], fill_rect)
     pygame.draw.rect(surf, COLOR["WHITE"], outline_rect, 2)
 
-def draw_location_text(surf, text):
-    font = pygame.font.Font(font_name, GAME_SETUP["LOCATION_TEXT_SIZE"])
-    text_surface = font.render(text, True, COLOR["WHITE"])
-    text_rect = text_surface.get_rect()
-    text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
-    surf.blit(text_surface, text_rect)
-    
 def playBGM(BGM):
     pygame.mixer.music.load(os.path.join('sound', 'BGM', f'{BGM}.mp3'))
     pygame.mixer.music.set_volume(0.7)
@@ -179,18 +176,18 @@ addStationIntoGroup()
 
 # gaming loop
 show_init = True
-story = True
+story_init = True
 running = True
 lastPlayerLocation = player.getLocation()
 while running:
+    # execute at most <FPS> times in 1 sec
+    clock.tick(GAME_BASE_SETUP["FPS"])
+    
     # show the game init screen
     if show_init:
         draw_init()
         show_init = False
    
-    # execute at most <FPS> times in 1 sec
-    clock.tick(GAME_BASE_SETUP["FPS"])
-    
     # get input
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -254,8 +251,8 @@ while running:
     if not(blackhole.chuck_check(player.getLocation())):
         blackhole.kill()
 
-    # Star Zone
     createBlackHole()
+    # Star Zone
     Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
     if Create and (not player.getLocation() in readed_star):
         readed_star.append(player.getLocation())
@@ -268,14 +265,15 @@ while running:
     screen.blit(background_img, (0, 0))
 
     # read story
-    if story:
+    if story_init:
+        pygame.display.update()
         read_story("./story/start.txt", background_img)
-        story = False
+        story_init = False
 
     all_sprites.draw(screen)
     stars.draw(screen)
     draw_health(screen, player.getHealth(), 10, 10)
-    draw_location_text(screen, player.getLocation())
+    draw_text(player.getLocation(), font_name, GAME_SETUP["LOCATION_TEXT_SIZE"], GAME_SETUP["LOCATION_TEXT_CENTER"])
     pygame.display.update()
 
 pygame.quit()
