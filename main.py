@@ -154,7 +154,20 @@ def drawEarth():
         Earth_image = pygame.image.load(os.path.join("img/story_background", 'Earth.jpg')).convert()
         Earth_image = pygame.transform.scale(Earth_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
         screen.blit(Earth_image, (0, 0))
+        # font = pygame.font.Font(font_name, 20)
+        # text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
+        # screen.blit(text_surface, (1024 - 210, 512 - 30))
         pygame.display.update()
+        # waiting = True
+        # while waiting:
+        #     for event in pygame.event.get():
+        #         if event.type == pygame.QUIT:
+        #             pygame.quit()
+        #         elif event.type == pygame.KEYDOWN:
+        #             if event.key == pygame.K_RETURN:
+        #                 waiting = False
+        # read_story(script[star_name]["text_src"], Earth_image)
+
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
