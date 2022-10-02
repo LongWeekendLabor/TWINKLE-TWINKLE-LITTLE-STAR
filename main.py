@@ -102,7 +102,6 @@ def show_story_bg(star_name: str):
 def show_question(star_name: str):
     with open(os.path.join('story', f'{star_name}', 'question.json'), mode='r', encoding='utf-8') as file:
         data = json.load(file)
-    print(data, data["question"])
     show_story_bg(star_name)
     gray_mask = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
     gray_mask.fill((50, 50, 50))
@@ -119,10 +118,10 @@ def show_question(star_name: str):
             if event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1: ans = 1
-                elif event.key == pygame.K_2: ans = 2
-                elif event.key == pygame.K_3: ans = 3
-                elif event.key == pygame.K_4: ans = 4
+                if event.key == pygame.K_1: ans = 0
+                elif event.key == pygame.K_2: ans = 1
+                elif event.key == pygame.K_3: ans = 2
+                elif event.key == pygame.K_4: ans = 3
                 else: ans = -1
                 
                 if ans != -1:
@@ -156,11 +155,13 @@ def read_story(src, bg):
                 pygame.display.update()
                 key_up_times += 1
 
-def draw_story_scenes(star_name: str):
+def draw_story_scenes(star_name: str, file_name: str = None):
+    playBGM('WatchingStar')
+    if file_name == None: file_name = star_name
     story_image = show_story_bg(star_name)
-    font = pygame.font.Font(zhFont, 20)
-    text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
-    screen.blit(text_surface, (1024 - 210, 512 - 30))
+    screen.blit(story_image, (0, 0))
+    draw_text("Enter to continue", 20, (1024 - 210, 512 - 30), font=enFont)
+
     pygame.display.update()
     waiting = True
     while waiting:
@@ -169,9 +170,9 @@ def draw_story_scenes(star_name: str):
                 pygame.quit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    waiting = False
-    read_story(script[star_name]["text_src"], story_image)
-
+                    waiting = False                
+    read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
+    
 def createRock():
     rock = Rock()
     all_sprites.add(rock)
@@ -282,6 +283,8 @@ while running:
         star_name = location_star[player.getLocation()]
         draw_story_scenes(star_name)
         show_question(star_name)
+        read_story(os.path.join('story', 'doge', f'{len(readed_star)}.txt'), background_img)
+        playBGM('gaming')
         
     if bool(chuck.count(player.getLocation())):
         if stars.has(star) == 0:
