@@ -73,7 +73,7 @@ def draw_text(text: str, text_size: int, topleft: tuple, font=enFont, background
 def draw_init():
     playBGM('opening')
     screen.blit(init_background_img, (0, 0))
-    draw_text("Enter to start", 20, (1024 - 150, 516 - 30), background=(0, 0, 0))
+    draw_text("Enter to start", 20, (1024 - 180, 516 - 30), background=(0, 0, 0))
 
     pygame.display.update()
     waiting = True

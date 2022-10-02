@@ -21,7 +21,6 @@ class BlackHole(pygame.sprite.Sprite):
         self.__total_degree = 0
         self.__rot_degree = 0.6
         self.__location = self.__create_location()
-        print(self.__location)
 
     # public methods
     def getLocation(self): return self.__location
