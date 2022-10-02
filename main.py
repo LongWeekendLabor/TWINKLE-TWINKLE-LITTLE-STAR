@@ -23,11 +23,14 @@ pygame.display.set_icon(pygame.image.load(os.path.join('img', 'logo.png')))
 clock = pygame.time.Clock()
 
 # load json file
+readed_star = []
 with open('./story/star.json', mode='r', encoding='utf-8') as file:
     location_star = json.load(file)
 with open('./story/script.json', mode='r', encoding='utf-8') as file:
     script = json.load(file)
-readed_star = []
+with open("./story/star.json", mode="r", encoding="utf-8") as file:
+    data = json.load(file)
+chuck = list(data.keys())
 
 # Loading Backgrounds
 BGlist = []
@@ -46,9 +49,6 @@ heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
 zhFont = os.path.join('font', 'TaipeiSans.ttf')
 enFont = os.path.join('font', 'voltergoldfish.ttf')
 
-# json information
-nameList, text_src, chuck = json_read()
-
 # sprite group
 all_sprites = pygame.sprite.Group()
 rocks = pygame.sprite.Group()
@@ -56,7 +56,6 @@ stations = pygame.sprite.Group()
 stars = pygame.sprite.Group()
 story_text = pygame.sprite.Group()
 blackholes = pygame.sprite.Group()
-
 
 # dialogue class add
 dialogue = Dialogue((90, 400))
@@ -108,6 +107,7 @@ def show_question(star_name: str):
     gray_mask.fill((50, 50, 50))
     gray_mask.set_alpha(150)
     screen.blit(gray_mask, (0, 0))
+    print(data["question"])
     draw_text(f'Q: {data["question"]}', 30, (100, 100))
     for i in range(len(data["options"])):
         draw_text(f'{i + 1}. {data["options"][i]}', 24, (130, 120 + 30 * (i + 1)))
@@ -312,8 +312,8 @@ while running:
         else:
             blackhole.kill()
         if endGame:
-            print(endGame)
             draw_story_scenes("Earth")
+            running = False
 
     # display screen
     BGindex = location_index(player.getLocation())
