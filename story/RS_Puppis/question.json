@@ -1,0 +1,8 @@
+{
+    "question" : "Supergiants are the most luminous stars with a temperature range of about ?",
+    "options" : ["1000K~2000K", "100K~1000K", "3000K~20000K"],
+    "answer" : 2,
+    "info" : "This animate morphs the observations of variable star RS Puppis, showing the light echo that can be seen around the star.",
+    "num_of_images" : 31,
+    "speed" : 50
+}

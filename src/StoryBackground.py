@@ -5,7 +5,7 @@ import pygame
 from .Const import *
 
 class StoryBackground(pygame.sprite.Sprite):
-    def __init__(self, star_name, num_of_img):
+    def __init__(self, star_name, num_of_img, speed):
         pygame.sprite.Sprite.__init__(self)
         
         # Loading images
@@ -25,7 +25,7 @@ class StoryBackground(pygame.sprite.Sprite):
         self.__bg_anim = bg_anim
         self.__frame = 0
         self.__last_update = pygame.time.get_ticks()
-        self.__frame_rate = 50
+        self.__frame_rate = speed
         
     # public methods
     def update(self):

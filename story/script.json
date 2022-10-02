@@ -6,5 +6,13 @@
     "V838" : {
         "text_src" : "./story/V838/V838.txt",
         "location" : "A2"
+    },
+    "RS_Puppis" : {
+        "text_src" : "./story/RS_Puppis/RS_Puppis.txt",
+        "location" : "C1"
+    },
+    "Vampire" : {
+        "text_src" : "./story/Vampire/Vampire.txt",
+        "location" : "B3"
     }
 }

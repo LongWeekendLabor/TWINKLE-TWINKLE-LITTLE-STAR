@@ -2,7 +2,7 @@
 
 Whenever the light of a star flickers, it is called a variable star.
 
-"This is what I read on the spacecraft.Among them, Cepheids are even more special.
+"This is what I read on the spacecraft. Among them, Cepheids are even more special.
 
 They will brighten or dim periodically, and each time the brightness is higher, his period will be longer.
 
