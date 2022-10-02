@@ -69,7 +69,6 @@ player = Player()
 station = SpaceStation()
 blackhole = BlackHole()
 star = Star()
-starcoin = StarCoin((25, 50), 50)
 
 def draw_text(text: str, text_size: int, topleft: tuple, font=zhFont, background:tuple=None):
     font = pygame.font.Font(font, text_size)
@@ -127,7 +126,9 @@ def show_question(star_name: str):
                 else: ans = -1
                 
                 if ans != -1: 
-                    if ans == data["answer"]: player.addEarnedStars()
+                    if ans == data["answer"]: 
+                        player.addEarnedStars()
+                        createStarCoin()
                     print(player.getEarnedStars())
                     waiting = False
 
@@ -174,6 +175,10 @@ def draw_story_scenes(star_name: str, file_name: str = None):
                 if event.key == pygame.K_RETURN:
                     waiting = False                
     read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
+
+def createStarCoin():
+    starcoin = StarCoin(player.getEarnedStars())
+    all_sprites.add(starcoin)
     
 def createRock():
     rock = Rock()
@@ -214,7 +219,6 @@ def playBGM(BGM):
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
 addStationIntoGroup()
-all_sprites.add(starcoin)
 
 # gaming loop
 show_init = True

@@ -5,14 +5,14 @@ import pygame
 from .Const import *
 
 class StarCoin(pygame.sprite.Sprite):
-    def __init__(self, center, size):
+    def __init__(self, nth):
         
         # Loading images
         star_coin_anim = []
         for i in range(13):
             star_coin_img = pygame.image.load(os.path.join('img', 'StarCoin', f'{i + 1}.png')).convert()
             star_coin_img.set_colorkey(COLOR["BLACK"])
-            star_coin_anim.append(pygame.transform.scale(star_coin_img, (size, size)))
+            star_coin_anim.append(pygame.transform.scale(star_coin_img, (30, 30)))
         
         pygame.sprite.Sprite.__init__(self)
         
@@ -20,7 +20,10 @@ class StarCoin(pygame.sprite.Sprite):
         
         self.image = star_coin_anim[0]
         self.rect = self.image.get_rect()
-        self.rect.center = center
+        # self.rect.center = center
+        # self.rect.topleft = topleft
+        self.rect.top = 25
+        self.rect.left = 7 + 10 * (nth - 1)
         
         # private variables
         self.__star_coin_anim = star_coin_anim
