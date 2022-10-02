@@ -5,23 +5,26 @@ import os
 
 class Rock(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, RandomMode = False):
         
        # Loading image
         meteorite_img = [ pygame.image.load(os.path.join("img", "meteorite", f"meteorite-{ _ + 1 }.png")).convert() for _ in range(4)]
+        meteorite_img.append(pygame.image.load(os.path.join("img", "meteorite", "Gcat.png")).convert())
 
         pygame.sprite.Sprite.__init__(self)
 
         # Using random to determine top or bottom or left or right
-        self.__randomDirecton = self.__Random()
+        self.__direction = random.randint(0, 4)
         self.__image_ori = meteorite_img[self.__Random()]
         self.image = self.__image_ori.copy()
         self.__image_ori.set_colorkey(COLOR["BLACK"])
         self.rect = self.image.get_rect()
         self.radius = self.rect.width * 0.7 / 2
-        self.__decideLocation(self.__randomDirecton)
         self.__total_degree = 0
         self.__rot_degree = random.randrange(-3,3)
+        
+        if RandomMode: self.__randomLocation()
+        else: self.__decideLocation()
 
 
     # public methods
@@ -30,6 +33,10 @@ class Rock(pygame.sprite.Sprite):
         self.rect.x += self.__speedx
         self.rect.y += self.__speedy
 
+ 
+    # Setters and Getters
+    def getDamage(self): return self.__damage
+    
             
     def isOutOfBoundary(self):
         if self.rect.top > GAME_BASE_SETUP["HEIGHT"] or self.rect.bottom < 0 or self.rect.left > GAME_BASE_SETUP["WIDTH"] or self.rect.right < 0:
@@ -37,7 +44,11 @@ class Rock(pygame.sprite.Sprite):
         else: return False
     
     # private methods
-    def __Random(self): return random.randrange(0,4)
+    def __Random(self): 
+        if random.randint(0, 10000) != 5487:
+            return random.randrange(0, 4)
+        else:
+            return 4
     
     def __rotate(self):
         self.__total_degree += self.__rot_degree
@@ -47,18 +58,18 @@ class Rock(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center
         
-    def __decideLocation(self, direction):
-        if direction == 0:
+    def __decideLocation(self):
+        if self.__direction == 0:
             self.__speedx = random.randrange(-1,1)
             self.__speedy = random.randrange(1,3)
             self.rect.x = random.randrange(0, GAME_BASE_SETUP["WIDTH"] - self.rect.width)
             self.rect.y = random.randrange(-100,-40)
-        elif direction == 1:
+        elif self.__direction == 1:
             self.__speedx = random.randrange(1,3)
             self.__speedy = random.randrange(-1,1)
             self.rect.x = random.randrange(-100, -40)
             self.rect.y = random.randrange(0,GAME_BASE_SETUP["HEIGHT"] - self.rect.height)
-        elif direction == 2:
+        elif self.__direction == 2:
             self.__speedx = random.randrange(-1,3)
             self.__speedy = random.randrange(-3,-1)
             self.rect.x = random.randrange(0, GAME_BASE_SETUP["WIDTH"] - self.rect.width)
@@ -68,3 +79,10 @@ class Rock(pygame.sprite.Sprite):
             self.__speedy = random.randrange(-1,1)
             self.rect.x = random.randrange(1025, 1034)
             self.rect.y = random.randrange(0,GAME_BASE_SETUP["HEIGHT"] - self.rect.height)
+            
+    def __randomLocation(self):
+        self.__speedx = random.randrange(-3,3)
+        self.__speedy = random.randrange(-3,3)
+        self.rect.x = random.randrange(0, GAME_BASE_SETUP["WIDTH"] - self.rect.width)
+        self.rect.y = random.randrange(0, GAME_BASE_SETUP["HEIGHT"] - self.rect.height)
+        
