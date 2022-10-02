@@ -183,7 +183,7 @@ def draw_story_scenes(star_name: str, file_name: str = None):
     playBGM('WatchingStar')
     if file_name == None: file_name = star_name
     story_image = show_story_bg(star_name)
-    dyBG = StoryBackground(star_name, data["num_of_images"])
+    dyBG = StoryBackground(star_name, data["num_of_images"], data["speed"])
     bg.add(dyBG)
     pygame.display.update()
     waiting = True

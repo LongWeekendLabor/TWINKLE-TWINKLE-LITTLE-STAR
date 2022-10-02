@@ -1,0 +1,8 @@
+{
+    "question" : "What kind of variable is this variable star classified as?",
+    "options" : ["Cataclysmic variable stars(CVs)", "Blossom variable stars(BVs)", "Oriented variable stars(OVS)"],
+    "answer" : 0,
+    "info" : "A supernova is one way that a star can end its life, exploding in a display of grandiose fireworks.",
+    "num_of_images" : 22,
+    "speed" : 25
+}
