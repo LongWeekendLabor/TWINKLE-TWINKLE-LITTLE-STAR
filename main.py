@@ -157,11 +157,12 @@ def read_story(src, bg):
                 key_up_times += 1
 
 def draw_story_scenes(star_name: str, file_name: str = None):
+    playBGM('WatchingStar')
     if file_name == None: file_name = star_name
     story_image = show_story_bg(star_name)
-    font = pygame.font.Font(zhFont, 20)
-    text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
-    screen.blit(text_surface, (1024 - 210, 512 - 30))
+    screen.blit(story_image, (0, 0))
+    draw_text("Enter to continue", font_name, 20, (1024 - 210, 512 - 30))
+
     pygame.display.update()
     waiting = True
     while waiting:
@@ -171,8 +172,9 @@ def draw_story_scenes(star_name: str, file_name: str = None):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     waiting = False
+                    
+    playBGM('gaming')
     read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
-    
 def createRock():
     rock = Rock()
     all_sprites.add(rock)
