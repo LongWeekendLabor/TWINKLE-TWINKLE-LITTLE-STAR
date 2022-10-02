@@ -304,6 +304,7 @@ while running:
         for star in stars.sprites(): star.kill()
         
     # Blackhole Zone
+    absorb = pygame.sprite.groupcollide(blackholes, rocks, True, pygame.sprite.collide_circle)
     endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
     if player.getEarnedStars() >= GAME_SETUP["TARGET"]:
         if blackhole.chuck_check(player.getLocation()):
