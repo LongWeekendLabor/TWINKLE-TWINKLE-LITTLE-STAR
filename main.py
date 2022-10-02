@@ -106,7 +106,7 @@ def show_question(star_name: str):
     screen.blit(gray_mask, (0, 0))
     draw_text("Q:", 30, (95, 70))
     questionList = split_text(data["question"], 10)
-    show_dialogue(questionList, 28, (95, 110))
+    show_dialogue(questionList, 24, (95, 110))
     for i in range(len(data["options"])):
         optionList = split_text(f'{i + 1}. {data["options"][i]}', 10)
         show_dialogue(optionList, 24, (130, 250 + 30 * (i + 1)))
@@ -159,7 +159,7 @@ def read_story(src, bg):
         readLine = file.read().split("\n\n")
     textList = []
     for i in readLine:
-        textList.append(split_text(i, 13))
+        textList.append(split_text(i, 10))
     dialogue_bg = get_gray_mask()
     key_up_times = 1
     waiting = True
@@ -173,7 +173,7 @@ def read_story(src, bg):
             elif event.type == pygame.KEYUP:
                 screen.blit(bg, (0, 0))
                 screen.blit(dialogue_bg, (0, 350))
-                show_dialogue(textList[key_up_times - 1], 25, (50, 370))
+                show_dialogue(textList[key_up_times - 1], 23, (50, 370))
                 pygame.display.update()
                 key_up_times += 1
 
