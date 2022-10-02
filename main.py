@@ -140,7 +140,7 @@ def split_text(text: str, long: int): # return text list
             text += char_list[i] + " "
         print(text)
         textList.append(text)
-        char_list = char_list[long: len(char_list)]
+        char_list = char_list[long - 1: len(char_list)]
         text = ""
         
     for i in range(0, len(char_list)):
@@ -197,7 +197,8 @@ def draw_story_scenes(star_name: str, file_name: str = None):
                 if event.key == pygame.K_RETURN:
                     waiting = False
         bg.draw(screen)
-        draw_text(f'{data["info"]}', 20, (20, 20))
+        show_dialogue(split_text(data["info"], 10), 20, (20, 20))
+        # draw_text(f'{data["info"]}', 20, (20, 20))
         draw_text("Enter to continue", 20, (1024 - 210, 512 - 30), font=enFont)
         pygame.display.update()
     read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
