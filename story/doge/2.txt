@@ -1,7 +1,5 @@
-飛船上的資料裡總是會出現像是地球、太陽等等的詞彙。
+The data from the ship always appear words like, Earth, Sun, etc.
 
-似乎所有的資料都是以地球上的事物來度量。
+It seems that all data are measured in terms of things on Earth.Can't help but wonder, what kind of place is the Earth?
 
-不免讓人好奇，地球究竟是怎麼樣的地方？
-
-太陽、又是什麼樣子？
+What is the Sun like?

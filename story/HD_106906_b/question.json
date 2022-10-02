@@ -1,5 +1,5 @@
 {
-    "question" : "氣態巨行星是指主要由氫和氦組成的巨行星，下列哪個行星也是屬於氣態巨行星？",
-    "options" : ["金星", "土星", "天王星", "海王星"],
+    "question" : "Gas giant planets refer to giant planets mainly composed of hydrogen and helium. Which of the following planets is also a gas giant planet?",
+    "options" : ["Saturn", "Venus", "Uranus", "Neptune"],
     "answer" : 1
 }
