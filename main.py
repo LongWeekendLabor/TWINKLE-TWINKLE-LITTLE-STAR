@@ -175,7 +175,7 @@ createBlackHole()
 
 # gaming loop
 show_init = True
-story = T
+story = True
 running = True
 lastPlayerLocation = player.getLocation()
 while running:
