@@ -13,6 +13,6 @@
     }, 
     "WASP-12b" : {
         "text_src" : "./story/WASP-12b/WASP-12b.txt", 
-        "location" : "B2"
+        "location" : "C3"
     }
 }
