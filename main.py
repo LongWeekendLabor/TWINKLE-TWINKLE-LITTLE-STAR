@@ -119,10 +119,10 @@ def show_question(star_name: str):
             if event.type == pygame.QUIT:
                 pygame.quit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1: ans = 1
-                elif event.key == pygame.K_2: ans = 2
-                elif event.key == pygame.K_3: ans = 3
-                elif event.key == pygame.K_4: ans = 4
+                if event.key == pygame.K_1: ans = 0
+                elif event.key == pygame.K_2: ans = 1
+                elif event.key == pygame.K_3: ans = 2
+                elif event.key == pygame.K_4: ans = 3
                 else: ans = -1
                 
                 if ans != -1:
@@ -156,7 +156,8 @@ def read_story(src, bg):
                 pygame.display.update()
                 key_up_times += 1
 
-def draw_story_scenes(star_name: str):
+def draw_story_scenes(star_name: str, file_name: str = None):
+    if file_name == None: file_name = star_name
     story_image = show_story_bg(star_name)
     font = pygame.font.Font(zhFont, 20)
     text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
@@ -170,7 +171,7 @@ def draw_story_scenes(star_name: str):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     waiting = False
-    read_story(script[star_name]["text_src"], story_image)
+    read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
     
 def createRock():
     rock = Rock()
@@ -282,6 +283,7 @@ while running:
         star_name = location_star[player.getLocation()]
         draw_story_scenes(star_name)
         show_question(star_name)
+        read_story(os.path.join('story', 'doge', f'{len(readed_star)}.txt'), background_img)
         
     if bool(chuck.count(player.getLocation())):
         if stars.has(star) == 0:
