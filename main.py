@@ -129,7 +129,7 @@ def draw_story_scenes(star_name: str):
                 if event.key == pygame.K_RETURN:
                     waiting = False
     read_story(script[star_name]["text_src"], story_image)
-    
+
 def createRock():
     rock = Rock()
     all_sprites.add(rock)
@@ -150,6 +150,11 @@ def createBlackHole():
     all_sprites.add(blackhole)
     blackholes.add(blackhole)
     
+def drawEarth():
+        Earth_image = pygame.image.load(os.path.join("img/story_background", 'Earth.jpg')).convert()
+        Earth_image = pygame.transform.scale(Earth_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
+        screen.blit(Earth_image, (0, 0))
+        pygame.display.update()
     
 def draw_health(surf, hp, x, y):
     if hp < 0:
@@ -249,13 +254,15 @@ while running:
             stars.empty()
     else:
         stars.empty()
-        
+
+    createBlackHole()
     endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
     if not(blackhole.chuck_check(player.getLocation())):
         blackhole.kill()
+    if endGame:
+        drawEarth()
 
     # Star Zone
-    createBlackHole()
     Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
     if Create and (not player.getLocation() in readed_star):
         readed_star.append(player.getLocation())
