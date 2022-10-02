@@ -11,6 +11,7 @@ from src.BlackHole import *
 from src.SpaceStation import *
 from src.Dialogue import *
 from src.Explosion import *
+from src.LocationFunction import *
 
 # init & create a window
 pygame.init()
@@ -19,6 +20,12 @@ screen = pygame.display.set_mode((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEI
 pygame.display.set_caption(GAME_BASE_SETUP["GAMENAME"])
 pygame.display.set_icon(pygame.image.load(os.path.join('img', 'logo.png')))
 clock = pygame.time.Clock()
+
+with open('./story/star.json', mode='r', encoding='utf-8') as file:
+    location_star = json.load(file)
+with open('./story/script.json', mode='r', encoding='utf-8') as file:
+    script = json.load(file)
+readed_star = []
 
 # Loading Backgrounds
 BGlist = []
@@ -74,41 +81,54 @@ def draw_init():
 
 def read_story(src, bg):
     textLine = read_txt(src)
-    dialogue = Dialogue(textLine[0][0], (90, 350))
-    dialogue_2 = Dialogue(textLine[0][1], (90, 380))
+    dialogue = Dialogue((90, 350))
+    dialogue_2 = Dialogue((90, 380))
     story_text.add(dialogue)
     story_text.add(dialogue_2)
-
     dialogue_bg = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
     dialogue_bg.fill((50, 50, 50))
     dialogue_bg.set_alpha(150)
     screen.blit(dialogue_bg, (0, 300))
 
     waiting = True
-    Key_up_times = 1
+    key_up_times = 0
     while waiting:
         clock.tick(GAME_BASE_SETUP["FPS"])
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+            elif event.type == pygame.KEYUP and key_up_times >= len(textLine):
+                waiting = False
             elif event.type == pygame.KEYUP:
-                dialogue.setText(textLine[Key_up_times][0])
-                dialogue_2.setText(textLine[Key_up_times][1])
-                Key_up_times += 1
+                dialogue.setText(textLine[key_up_times][0])
+                dialogue_2.setText(textLine[key_up_times][1])
+                key_up_times += 1
                 screen.blit(bg, (0, 0))
                 screen.blit(dialogue_bg, (0, 300))
+                story_text.update()
+                story_text.draw(screen)
+                pygame.display.update()
 
-        if Key_up_times >= len(textLine):
-            waiting = False
-        else:
-            story_text.update()
-            story_text.draw(screen)
-            pygame.display.update()
+    dialogue.kill()
+    dialogue_2.kill()
 
-def draw_plot():
-    screen.fill(COLOR["BLACK"])
+def draw_story_scenes(star_name: str):
+    story_image = pygame.image.load(os.path.join("img/story_background", f"{star_name}.jpg")).convert()
+    story_image = pygame.transform.scale(story_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
+    screen.blit(story_image, (0, 0))
+    font = pygame.font.Font(font_name, 20)
+    text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
+    screen.blit(text_surface, (1024 - 210, 512 - 30))
     pygame.display.update()
-    pygame.time.delay(3000)
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    waiting = False
+    read_story(script[star_name]["text_src"], story_image)
     
 def createRock():
     rock = Rock()
@@ -222,7 +242,7 @@ while running:
         addStationIntoGroup()
 
     if bool(chuck.count(player.getLocation())):
-        if not(stars.has(star)):
+        if stars.has(star) == 0:
             star = Star()
             star.setLocation(player.getLocation())
             stars.add(star)
@@ -235,10 +255,12 @@ while running:
     if not(blackhole.chuck_check(player.getLocation())):
         blackhole.kill()
 
-    # # Star Zone
-    # Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
-    # if Create:
-    #     draw_plot()
+    # Star Zone
+    Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
+    if Create and (not player.getLocation() in readed_star):
+        readed_star.append(player.getLocation())
+        star_name = location_star[player.getLocation()]
+        draw_story_scenes(star_name)
 
     # display screen
     BGindex = location_index(player.getLocation())

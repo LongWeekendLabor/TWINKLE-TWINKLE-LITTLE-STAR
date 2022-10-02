@@ -2,13 +2,6 @@ import random
 from .Const import *
 
 class Star(pygame.sprite.Sprite):
-
-    def __init__(self, name: str, temperture: float, color: str):
-
-        # Loading images
-        image = []
-
-class Star(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
 
@@ -28,8 +21,8 @@ class Star(pygame.sprite.Sprite):
         self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"]-60)
         
         # private variables
-        # self.__name = name
         self.__location = "none"
+        self.__isUsed = False
 
     # public methods
     def update(self):
@@ -40,9 +33,11 @@ class Star(pygame.sprite.Sprite):
     def setTemperture(self, temperture: float): self.__temperture = temperture
     def setColor(self, color: str): self.__color = color
     def setLocation(self, location: str): self.__location = location
+    def setIsUsed(self, isUsed: bool): self.__isUsed = isUsed
     def getName(self): return self.__name
     def getTemperture(self): return self.__temperture
     def getColor(self): return self.__color
-    def getLocation(self): return self.__location      
+    def getLocation(self): return self.__location
+    def getIsUser(self): return self.__isUsed
     
     # private methods

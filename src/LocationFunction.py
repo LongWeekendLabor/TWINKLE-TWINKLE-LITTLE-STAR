@@ -50,7 +50,6 @@ def json_read():
     text_src = []
     chuck = []
     for i in nameList:
-        print(data[i]["text_src"])
         text_src.append(data[i]["text_src"])
         chuck.append(data[i]["location"])
     return nameList, text_src, chuck
