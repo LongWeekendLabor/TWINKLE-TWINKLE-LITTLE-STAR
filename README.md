@@ -29,6 +29,8 @@ When you collect 3 points, the map will be generated with the black hole, just g
 
 ![black hole](https://i.imgur.com/a6iqVAZ.png)  
 *(developing screen)*
+## Game Map
+![map](https://i.imgur.com/uubjEiR.jpg)  
 ## Message From The Developers
 Good luck and have fun，maybe you have a chance to trigger 1/10000 percentage Easter egg.  
 ![WhoAreYou](https://i.imgur.com/xz79LcE.png)
