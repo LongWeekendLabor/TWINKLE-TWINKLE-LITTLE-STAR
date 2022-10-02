@@ -5,9 +5,9 @@ from .Const import *
 font_story = os.path.join("font/TaipeiSans.ttf")
 
 class Dialogue(pygame.sprite.Sprite):
-    def __init__(self, text: str, rect: tuple):
+    def __init__(self, rect: tuple):
         pygame.sprite.Sprite.__init__(self)
-        self.__text = text
+        self.__text = ""
 
         self.font = pygame.font.Font(font_story, 25)
         self.image = self.font.render(self.__text, True, COLOR["WHITE"])
