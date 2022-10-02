@@ -17,11 +17,8 @@ class StarCoin(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         
         # public variables
-        
         self.image = star_coin_anim[0]
         self.rect = self.image.get_rect()
-        # self.rect.center = center
-        # self.rect.topleft = topleft
         self.rect.top = 25
         self.rect.left = 7 + 10 * (nth - 1)
         
