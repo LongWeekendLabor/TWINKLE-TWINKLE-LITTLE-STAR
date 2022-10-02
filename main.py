@@ -69,8 +69,8 @@ station = SpaceStation()
 blackhole = BlackHole()
 star = Star()
 
-def draw_text(text: str, font_name, text_size: int, topleft: tuple, background:tuple=None):
-    font = pygame.font.Font(font_name, text_size)
+def draw_text(text: str, text_size: int, topleft: tuple, font=zhFont, background:tuple=None):
+    font = pygame.font.Font(font, text_size)
     text_surface = font.render(text, True, COLOR["WHITE"], background)
     screen.blit(text_surface, topleft)
     pygame.display.update()
@@ -99,13 +99,13 @@ def show_story_bg(star_name: str):
     screen.blit(story_image, (0, 0))
     return story_image
 
-def draw_text(surf, text, size, x, y, font = zhFont):
-    font = pygame.font.Font(font, size)
-    text_surface = font.render(text, True, COLOR["WHITE"])
-    text_rect = text_surface.get_rect()
-    text_rect.centerx = x
-    text_rect.centery = y
-    surf.blit(text_surface, text_rect)
+# def draw_text(surf, text, size, x, y, font = zhFont):
+#     font = pygame.font.Font(font, size)
+#     text_surface = font.render(text, True, COLOR["WHITE"])
+#     text_rect = text_surface.get_rect()
+#     text_rect.centerx = x
+#     text_rect.centery = y
+#     surf.blit(text_surface, text_rect)
 
 def show_question(star_name: str):
     with open(os.path.join('story', f'{star_name}', 'question.json'), mode='r', encoding='utf-8') as file:
@@ -116,9 +116,9 @@ def show_question(star_name: str):
     gray_mask.fill((50, 50, 50))
     gray_mask.set_alpha(150)
     screen.blit(gray_mask, (0, 0))
-    draw_text(screen, f'Q: {data["question"]}', 30, 300, 100)
+    draw_text(f'Q: {data["question"]}', 30, (100, 100))
     for i in range(len(data["options"])):
-        draw_text(screen, f'{i + 1}. {data["options"][i]}', 24, 300, 100 + 30 * (i + 1))
+        draw_text(f'{i + 1}. {data["options"][i]}', 24, (130, 120 + 30 * (i + 1)))
     pygame.display.update()
     waiting = True
     while waiting:
@@ -322,7 +322,7 @@ while running:
     all_sprites.draw(screen)
     stars.draw(screen)
     draw_health(screen, player.getHealth(), 10, 10)
-    draw_text(player.getLocation(), font_name, GAME_SETUP["LOCATION_TEXT_SIZE"], GAME_SETUP["LOCATION_TEXT_CENTER"])
+    draw_text(player.getLocation(), GAME_SETUP["LOCATION_TEXT_SIZE"], GAME_SETUP["LOCATION_TEXT_CENTER"], font=enFont)
     pygame.display.update()
 
 pygame.quit()
