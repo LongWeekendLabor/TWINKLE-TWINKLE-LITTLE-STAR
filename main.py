@@ -11,6 +11,7 @@ from src.BlackHole import *
 from src.SpaceStation import *
 from src.Dialogue import *
 from src.Explosion import *
+from src.StarCoin import *
 from src.LocationFunction import *
 
 # init & create a window
@@ -68,6 +69,7 @@ player = Player()
 station = SpaceStation()
 blackhole = BlackHole()
 star = Star()
+starcoin = StarCoin((25, 50), 50)
 
 def draw_text(text: str, text_size: int, topleft: tuple, font=zhFont, background:tuple=None):
     font = pygame.font.Font(font, text_size)
@@ -212,6 +214,7 @@ def playBGM(BGM):
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
 addStationIntoGroup()
+all_sprites.add(starcoin)
 
 # gaming loop
 show_init = True
