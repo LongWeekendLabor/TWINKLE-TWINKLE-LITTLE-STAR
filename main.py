@@ -250,12 +250,12 @@ while running:
     else:
         stars.empty()
         
+    createBlackHole()
     endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
     if not(blackhole.chuck_check(player.getLocation())):
         blackhole.kill()
 
     # Star Zone
-    createBlackHole()
     Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
     if Create and (not player.getLocation() in readed_star):
         readed_star.append(player.getLocation())
