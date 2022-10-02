@@ -103,11 +103,11 @@ def show_question(star_name: str):
     gray_mask = get_gray_mask()
     screen.blit(gray_mask, (0, 0))
     draw_text("Q:", 30, (95, 70))
-    questionList = split_text(data["question"], 20)
+    questionList = split_text(data["question"], 10)
     show_dialogue(questionList, 28, (95, 110))
     for i in range(len(data["options"])):
-        optionList = split_text(f'{i + 1}. {data["options"][i]}', 20)
-        show_dialogue(optionList, 24, (130, 190 + 30 * (i + 1)))
+        optionList = split_text(f'{i + 1}. {data["options"][i]}', 10)
+        show_dialogue(optionList, 24, (130, 250 + 30 * (i + 1)))
     pygame.display.update()
 
     waiting = True
