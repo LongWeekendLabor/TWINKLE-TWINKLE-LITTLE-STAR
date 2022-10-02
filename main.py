@@ -176,7 +176,6 @@ def playBGM(BGM):
 all_sprites.add(player)
 for i in range(GAME_SETUP["NUM_OF_ROCKS"]): createRock()
 addStationIntoGroup()
-createBlackHole()
 
 # gaming loop
 show_init = True
@@ -256,6 +255,7 @@ while running:
         blackhole.kill()
 
     # Star Zone
+    createBlackHole()
     Create = pygame.sprite.spritecollide(player, stars, False, pygame.sprite.collide_circle)
     if Create and (not player.getLocation() in readed_star):
         readed_star.append(player.getLocation())
