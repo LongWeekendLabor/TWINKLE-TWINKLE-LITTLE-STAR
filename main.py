@@ -119,6 +119,7 @@ def read_story(src, bg):
                 key_up_times += 1
 
 def draw_story_scenes(star_name: str):
+    playBGM('WatchingStar')
     story_image = pygame.image.load(os.path.join("img/story_background", f"{star_name}.jpg")).convert()
     story_image = pygame.transform.scale(story_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
     screen.blit(story_image, (0, 0))
@@ -133,6 +134,7 @@ def draw_story_scenes(star_name: str):
                 if event.key == pygame.K_RETURN:
                     waiting = False
     read_story(script[star_name]["text_src"], story_image)
+    playBGM('gaming')
     
 def createRock():
     rock = Rock()
