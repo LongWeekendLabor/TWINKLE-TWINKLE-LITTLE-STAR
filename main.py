@@ -42,7 +42,8 @@ damage_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'damage.mp3'))
 heal_sound = pygame.mixer.Sound(os.path.join('sound', 'effect', 'heal.mp3'))
  
 # Text font
-font_name = os.path.join('font', 'voltergoldfish.ttf')
+zhFont = os.path.join('font', 'TaipeiSans.ttf')
+enFont = os.path.join('font', 'voltergoldfish.ttf')
 
 # json information
 nameList, text_src, chuck = json_read()
@@ -79,6 +80,51 @@ def draw_init():
                 waiting = False
                 playBGM('gaming')
 
+def show_story_bg(star_name: str):
+    story_image = pygame.image.load(os.path.join('img', 'story_background', f'{star_name}.jpg')).convert()
+    story_image = pygame.transform.scale(story_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
+    screen.blit(story_image, (0, 0))
+    return story_image
+
+def draw_text(surf, text, size, x, y, font = zhFont):
+    font = pygame.font.Font(font, size)
+    text_surface = font.render(text, True, COLOR["WHITE"])
+    text_rect = text_surface.get_rect()
+    text_rect.centerx = x
+    text_rect.centery = y
+    surf.blit(text_surface, text_rect)
+
+def show_question(star_name: str):
+    with open(os.path.join('story', f'{star_name}', 'question.json'), mode='r', encoding='utf-8') as file:
+        data = json.load(file)
+    print(data, data["question"])
+    show_story_bg(star_name)
+    gray_mask = pygame.Surface((GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
+    gray_mask.fill((50, 50, 50))
+    gray_mask.set_alpha(150)
+    screen.blit(gray_mask, (0, 0))
+    draw_text(screen, f'Q: {data["question"]}', 30, 300, 100)
+    for i in range(len(data["options"])):
+        draw_text(screen, f'{i + 1}. {data["options"][i]}', 24, 300, 100 + 30 * (i + 1))
+    pygame.display.update()
+    waiting = True
+    while waiting:
+        clock.tick(GAME_BASE_SETUP["FPS"])
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1: ans = 1
+                elif event.key == pygame.K_2: ans = 2
+                elif event.key == pygame.K_3: ans = 3
+                elif event.key == pygame.K_4: ans = 4
+                else: ans = -1
+                
+                if ans != -1:
+                    if ans == 1: print('GOOD')
+                    else: print('OOF')
+                    waiting = False
+
 def read_story(src, bg):
     textLine = read_txt(src)
     dialogue = Dialogue((90, 350))
@@ -113,10 +159,8 @@ def read_story(src, bg):
     dialogue_2.kill()
 
 def draw_story_scenes(star_name: str):
-    story_image = pygame.image.load(os.path.join("img/story_background", f"{star_name}.jpg")).convert()
-    story_image = pygame.transform.scale(story_image, (GAME_BASE_SETUP["WIDTH"], GAME_BASE_SETUP["HEIGHT"]))
-    screen.blit(story_image, (0, 0))
-    font = pygame.font.Font(font_name, 20)
+    story_image = show_story_bg(star_name)
+    font = pygame.font.Font(zhFont, 20)
     text_surface = font.render("Enter to continue", True, COLOR["WHITE"])
     screen.blit(text_surface, (1024 - 210, 512 - 30))
     pygame.display.update()
@@ -159,7 +203,7 @@ def draw_health(surf, hp, x, y):
     pygame.draw.rect(surf, COLOR["WHITE"], outline_rect, 2)
 
 def draw_location_text(surf, text):
-    font = pygame.font.Font(font_name, GAME_SETUP["LOCATION_TEXT_SIZE"])
+    font = pygame.font.Font(enFont, GAME_SETUP["LOCATION_TEXT_SIZE"])
     text_surface = font.render(text, True, COLOR["WHITE"])
     text_rect = text_surface.get_rect()
     text_rect.center = GAME_SETUP["LOCATION_TEXT_CENTER"]
@@ -245,6 +289,7 @@ while running:
         readed_star.append(player.getLocation())
         star_name = location_star[player.getLocation()]
         draw_story_scenes(star_name)
+        show_question(star_name)
         
     if bool(chuck.count(player.getLocation())):
         if stars.has(star) == 0:
