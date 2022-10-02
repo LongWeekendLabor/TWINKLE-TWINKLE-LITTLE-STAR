@@ -11,6 +11,7 @@ from src.BlackHole import *
 from src.SpaceStation import *
 from src.Dialogue import *
 from src.Explosion import *
+from src.StarCoin import *
 from src.LocationFunction import *
 
 # init & create a window
@@ -124,9 +125,11 @@ def show_question(star_name: str):
                 elif event.key == pygame.K_4: ans = 3
                 else: ans = -1
                 
-                if ans != -1:
-                    if ans == 1: print('GOOD')
-                    else: print('OOF')
+                if ans != -1: 
+                    if ans == data["answer"]: 
+                        player.addEarnedStars()
+                        createStarCoin()
+                    print(player.getEarnedStars())
                     waiting = False
 
 # dialog read and display
@@ -172,6 +175,10 @@ def draw_story_scenes(star_name: str, file_name: str = None):
                 if event.key == pygame.K_RETURN:
                     waiting = False                
     read_story(os.path.join('story', f'{star_name}', f'{file_name}.txt'), story_image)
+
+def createStarCoin():
+    starcoin = StarCoin(player.getEarnedStars())
+    all_sprites.add(starcoin)
     
 def createRock():
     rock = Rock()
@@ -283,7 +290,7 @@ while running:
         star_name = location_star[player.getLocation()]
         draw_story_scenes(star_name)
         show_question(star_name)
-        read_story(os.path.join('story', 'doge', f'{len(readed_star)}.txt'), background_img)
+        read_story(os.path.join('story', 'doge', f'{len(readed_star) - 1}.txt'), background_img)
         playBGM('gaming')
         
     if bool(chuck.count(player.getLocation())):
@@ -299,13 +306,14 @@ while running:
         
     # Blackhole Zone
     endGame = pygame.sprite.spritecollide(player, blackholes, False, pygame.sprite.collide_circle)
-    if blackhole.chuck_check(player.getLocation()):
-        createBlackHole()
-    else:
-        blackhole.kill()
-    if endGame:
-        draw_story_scenes("Earth")
-        running = False
+    if player.getEarnedStars() >= GAME_SETUP["TARGET"]:
+        if blackhole.chuck_check(player.getLocation()):
+            createBlackHole()
+        else:
+            blackhole.kill()
+        if endGame:
+            draw_story_scenes("Earth")
+            running = False
 
     # display screen
     BGindex = location_index(player.getLocation())

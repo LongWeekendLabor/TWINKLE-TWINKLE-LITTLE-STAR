@@ -26,6 +26,7 @@ class Player(pygame.sprite.Sprite):
         self.__ori_img = self.image
         self.__speed = [2, 2]
         self.__last = 0
+        self.__earnedStars = 0
         
         # player information variables
         self.__location = tuple_to_location((GAME_SETUP["MAP_SIZE"][0] // 2, GAME_SETUP["MAP_SIZE"][1] // 2))
@@ -35,8 +36,12 @@ class Player(pygame.sprite.Sprite):
     # getter and setter
     def getLocation(self): return self.__location
     def getHealth(self): return self.__health
+    def getEarnedStars(self): return self.__earnedStars
     def setLocation(self, location: str): self.__location = location
-    def setHealth(self, health: int): self.__health = health 
+    def setHealth(self, health: int): self.__health = health
+    def setEarnedStars(self, earnedStars): self.__earnedStars = earnedStars
+       
+    def addEarnedStars(self): self.__earnedStars += 1    
         
     def update(self):
         # get a class that store a list of bool that determine if any key was be clicked
