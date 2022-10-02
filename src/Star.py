@@ -3,6 +3,7 @@ from .Const import *
 
 class Star(pygame.sprite.Sprite):
     def __init__(self, center, size, cycle):
+        pygame.sprite.Sprite.__init__(self)
 
         # Loading images
         star_anim = []
@@ -10,16 +11,10 @@ class Star(pygame.sprite.Sprite):
             star_img = pygame.image.load(os.path.join('img', 'star', f'{i + 1}.png')).convert()
             star_img.set_colorkey(COLOR["BLACK"])
             star_anim.append(pygame.transform.scale(star_img, (size, size)))
-            
-        pygame.sprite.Sprite.__init__(self)
         
         # public variables
-        # self.image = pygame.transform.scale(random.choice(self.__picture), (60, 60))
-        # self.image.set_colorkey(COLOR["BLACK"])
         self.image = star_anim[0]
         self.rect = self.image.get_rect()
-        # self.rect.centerx = random.randrange(60, GAME_BASE_SETUP["WIDTH"] - 60)
-        # self.rect.centery = random.randrange(60, GAME_BASE_SETUP["HEIGHT"] - 60)
         self.rect.center = center
         self.radius = self.rect.width * 0.7 / 2
         

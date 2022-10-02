@@ -6,6 +6,7 @@ from .Const import *
 
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, center, size):
+        pygame.sprite.Sprite.__init__(self)
         
         # Loading images
         expl_anim = []
@@ -13,8 +14,6 @@ class Explosion(pygame.sprite.Sprite):
             expl_img = pygame.image.load(os.path.join('img', 'explosion', f'{i + 1}.png')).convert()
             expl_img.set_colorkey(COLOR["BLACK"])
             expl_anim.append(pygame.transform.scale(expl_img, (size, size)))
-        
-        pygame.sprite.Sprite.__init__(self)
         
         # public variables
         

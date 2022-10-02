@@ -4,11 +4,10 @@ from .Const import *
 
 class SpaceStation(pygame.sprite.Sprite):
     def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
 
         # Loading image
         self.__pictrue = pygame.image.load(os.path.join('img', 'space_station.png')).convert()
-
-        pygame.sprite.Sprite.__init__(self)
         
         # public variables
         self.image = pygame.transform.scale(self.__pictrue,GAME_SETUP["STATION_SIZE"])

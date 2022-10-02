@@ -6,6 +6,7 @@ from .Const import *
 
 class StarCoin(pygame.sprite.Sprite):
     def __init__(self, nth):
+        pygame.sprite.Sprite.__init__(self)
         
         # Loading images
         star_coin_anim = []
@@ -13,8 +14,6 @@ class StarCoin(pygame.sprite.Sprite):
             star_coin_img = pygame.image.load(os.path.join('img', 'StarCoin', f'{i + 1}.png')).convert()
             star_coin_img.set_colorkey(COLOR["BLACK"])
             star_coin_anim.append(pygame.transform.scale(star_coin_img, (30, 30)))
-        
-        pygame.sprite.Sprite.__init__(self)
         
         # public variables
         self.image = star_coin_anim[0]
